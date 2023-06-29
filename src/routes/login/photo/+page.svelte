@@ -44,8 +44,8 @@
                 accept="image/png, image/jpeg, image/gif, image/webp"
             />
             {#if uploading}
-                <p>Uploading...</p>
-                <progress class="progress progress-info w-56 mt-6" />
+                <p class="mt-6">Uploading...</p>
+                <progress class="progress progress-info w-full mt-6" />
             {/if}
         </div>
     </form>
