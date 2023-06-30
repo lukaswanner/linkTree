@@ -92,12 +92,12 @@
             href={`/${$userData?.username}`}
             class="link link-accent"
           >
-            https://kung.foo/{$userData?.username}
+            https://todo.change/{$userData?.username}
           </a>
         </p>
       </div>
   
-      <div class="text-center my-4">
+      <div class="flex flex-row gap-4 items-center justify-center text-center my-4">
         <a class="btn btn-outline btn-xs" href="/login/photo">Change photo</a>
         <a class="btn btn-outline btn-xs" href={`/${$userData.username}/bio`}>Edit Bio</a>
       </div>
@@ -136,6 +136,8 @@
           on:submit|preventDefault={addLink}
           class="bg-base-200 p-6 w-full mx-auto rounded-xl"
         >
+          <div class="flex flex-col gap-4 ">
+
           <select
             name="icon"
             class="select select-sm"
@@ -160,6 +162,7 @@
             class="input input-sm"
             bind:value={$formData.url}
           />
+          </div>
           <div class="my-4">
             {#if !titleIsValid}
               <p class="text-error text-xs">Must have valid title</p>
@@ -172,13 +175,15 @@
             {/if}
           </div>
   
+          <div class="flex flex-row gap-4">
           <button
             disabled={!formIsValid}
             type="submit"
             class="btn btn-success block">Add Link</button
           >
   
-          <button type="button" class="btn btn-xs my-4" on:click={cancelLink}>Cancel</button>
+          <button type="button" class="btn btn-error " on:click={cancelLink}>Cancel</button>
+          </div>
         </form>
       {:else}
         <button
