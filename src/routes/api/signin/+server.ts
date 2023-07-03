@@ -5,9 +5,8 @@ import type { RequestHandler } from "./$types";
 export const POST: RequestHandler = async ({ request, cookies }) => {
     const { idToken } = await request.json();
 
-    const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
+    const expiresIn = 1000 * 60 * 60 * 24 * 5; // 5 days
 
-    console.log("trying something now ");
     const decodedIdToken = await adminAuth.verifyIdToken(idToken);
 
     if (new Date().getTime() / 1000 - decodedIdToken.auth_time < 5 * 60) {

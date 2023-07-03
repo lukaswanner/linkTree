@@ -5,7 +5,7 @@ import {
     FB_PRIVATE_KEY,
     FB_PROJECT_ID,
 } from "$env/static/private";
-import { auth, credential, initializeApp } from "firebase-admin";
+import { auth, firestore, credential, initializeApp } from "firebase-admin";
 
 try {
     initializeApp({
@@ -21,5 +21,5 @@ try {
     }
 }
 
-export const adminDB = getFirestore();
+export const adminDB = firestore();
 export const adminAuth = auth();
