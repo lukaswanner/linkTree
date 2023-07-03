@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { doc, getFirestore, onSnapshot } from "firebase/firestore";
 import { getAuth, onAuthStateChanged, type User } from "firebase/auth";
 import { getStorage } from "firebase/storage";
-import { derived, writable, type Readable } from "svelte/store";
+import { writable, type Readable, derived } from "svelte/store";
 
 const firebaseConfig = {
     apiKey: "AIzaSyD-EGYaNa-ZM0WbGeH_NE-Q1C3arrsCG3Q",
@@ -50,7 +50,8 @@ function userStore() {
 export const user = userStore();
 
 /**
- * @param {string} path document path or reference
+ * @param  {string} path document path or reference
+ * @param  {any} startWith optional default data
  * @returns a store with realtime updates on document data
  */
 export function docStore<T>(path: string) {
@@ -73,13 +74,13 @@ export function docStore<T>(path: string) {
     };
 }
 
-type UserData = {
+interface UserData {
     username: string;
     bio: string;
     photoURL: string;
-    links: any[];
     published: boolean;
-};
+    links: any[];
+}
 
 export const userData: Readable<UserData | null> = derived(
     user,
