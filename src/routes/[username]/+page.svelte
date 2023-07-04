@@ -4,7 +4,6 @@
     import { page } from "$app/stores";
 
     export let data: PageData;
-    console.log(page);
 </script>
 
 <svelte:head>
