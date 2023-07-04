@@ -5,7 +5,7 @@
 
 <main class="prose flex flex-col justify-center items-center h-screen mx-auto">
     <h1 class="text-5xl">
-        The user @{$page.error?.data?.username} you're looking for doesn't exist.
+        {$page.error?.message}
     </h1>
 
     <p class="text-2xl text-info mt-8">Want this to be your username?</p>

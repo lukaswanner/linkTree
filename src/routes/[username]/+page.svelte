@@ -1,8 +1,10 @@
 <script lang="ts">
     import UserLink from "$lib/components/UserLink.svelte";
     import type { PageData } from "./$types";
+    import { page } from "$app/stores";
 
     export let data: PageData;
+    console.log(page);
 </script>
 
 <svelte:head>

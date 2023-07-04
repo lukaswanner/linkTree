@@ -3,7 +3,7 @@ import { adminDB } from "$lib/server/admin";
 import { error, fail, redirect } from "@sveltejs/kit";
 
 export const load = (async ({ locals, params }) => {
-    const uid = locals.userID;
+    const uid = locals.user?.uid;
 
     if (!uid) {
         throw redirect(301, "/login");
@@ -23,7 +23,7 @@ export const load = (async ({ locals, params }) => {
 
 export const actions = {
     default: async ({ locals, request, params }) => {
-        const uid = locals.userID;
+        const uid = locals.user?.uid;
 
         const data = await request.formData();
         const bio = data.get("bio");

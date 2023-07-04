@@ -11,16 +11,15 @@ export const load = (async ({ params }) => {
         where("username", "==", params.username),
         limit(1)
     );
+
     const snapshot = await getDocs(q);
     const exists = snapshot.docs[0]?.exists();
     const data = snapshot.docs[0]?.data();
 
     if (!exists) {
         throw error(404, {
-            message: "that user does not exist!",
-            data: {
-                username: params.username,
-            },
+            message: `The user @${params.username} does not exist!`,
+            data: { username: params.username },
         });
     }
 

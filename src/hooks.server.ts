@@ -1,4 +1,4 @@
-import { adminAuth } from "$lib/server/admin";
+import { adminAuth, adminDB } from "$lib/server/admin";
 import type { Handle } from "@sveltejs/kit";
 
 export const handle = (async ({ event, resolve }) => {
@@ -8,9 +8,17 @@ export const handle = (async ({ event, resolve }) => {
         const decodedClaims = await adminAuth.verifySessionCookie(
             sessionCookie!
         );
-        event.locals.userID = decodedClaims.uid;
+
+        const uid = decodedClaims.uid;
+        const userDoc = await adminDB.collection("users").doc(uid!).get();
+        const { username } = userDoc.data()!;
+
+        event.locals.user = {
+            uid: uid,
+            username,
+        };
     } catch (e) {
-        event.locals.userID = null;
+        event.locals.user = null;
         return resolve(event);
     }
 
