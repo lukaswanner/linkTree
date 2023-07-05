@@ -3,6 +3,9 @@
     import ThemeSelect from "./ThemeSelect.svelte";
 
     export let username: string | null | undefined;
+    export let photo: string | null | undefined;
+    export let email: string | null | undefined;
+
     $: len = $page.url.pathname.split("/").length;
     $: links = $page.url.pathname.split("/");
     $: home = $page.url.pathname === "/";
@@ -52,13 +55,17 @@
                 class="transition-colors focus:bg-primary hover:bg-primary cursor-pointer dropdown dropdown-bottom dropdown-end flex flex-row items-center gap-4 p-2 rounded-lg"
             >
                 <div class="avatar">
-                    <div class="overflow-hidden w-8 rounded-full">
-                        <img alt="user profile" src="/user.png" />
+                    <div class="overflow-hidden w-10 rounded-full">
+                        {#if photo}
+                            <img alt="user profile" src={photo} />
+                        {/if}
                     </div>
                 </div>
-                <div class="flex flex-col">
-                    <p>Natahsia Bunny</p>
-                    <p class="text-sm">natashmail@mail.com</p>
+                <div class="flex flex-col min-w-[10ch]">
+                    <p>{username}</p>
+                    {#if email}
+                        <p class="text-sm">{email}</p>
+                    {/if}
                 </div>
                 <div id="arrow" class="flex items-center fill-current w-6 h-6">
                     <svg

@@ -74,14 +74,6 @@ export function docStore<T>(path: string) {
     };
 }
 
-interface UserData {
-    username: string;
-    bio: string;
-    photoURL: string;
-    published: boolean;
-    links: any[];
-}
-
 export const userData: Readable<UserData | null> = derived(
     user,
     ($user, set) => {

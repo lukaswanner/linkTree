@@ -25,7 +25,7 @@
     }
 </script>
 
-<label class="swap swap-rotate">
+<label class="swap swap-rotate hover:text-primary transition-colors">
     <input on:change={setTheme} checked={lightTheme} type="checkbox" />
 
     <svg

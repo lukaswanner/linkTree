@@ -15,6 +15,10 @@
 </svelte:head>
 
 <div class="min-h-screen flex flex-col">
-    <Navbar username={data.user?.username} />
+    <Navbar
+        username={data.user?.username}
+        email={$user?.email}
+        photo={data.user?.photoURL}
+    />
     <slot />
 </div>

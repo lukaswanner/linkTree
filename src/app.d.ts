@@ -2,9 +2,15 @@
 // for information about these interfaces
 
 declare global {
-    interface User {
-        uid: string | null;
-        username: string | null;
+    interface UserData {
+        username: string;
+        bio: string;
+        photoURL: string;
+        published: boolean;
+        links: any[];
+    }
+    interface User extends UserData {
+        uid: string;
     }
     namespace App {
         interface Error {
