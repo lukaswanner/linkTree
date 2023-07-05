@@ -13,7 +13,7 @@
     />
 </svelte:head>
 
-<main class="flex w-full min-h-screen">
+<main class="flex w-full flex-1">
     <div class="hero bg-base-200">
         <div class="hero-content text-center">
             <div class="w-full">

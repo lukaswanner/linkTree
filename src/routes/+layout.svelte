@@ -12,7 +12,6 @@
 
 <svelte:head>
     <link rel="icon" href="https://fav.farm/🪶" />
-    <title>Plume</title>
 </svelte:head>
 
 <div class="min-h-screen flex flex-col">
