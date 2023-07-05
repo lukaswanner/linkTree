@@ -12,7 +12,7 @@
 </svelte:head>
 
 <main class="prose text-center mx-auto mt-8">
-    <h1 class="text-7xl text-purple-500">
+    <h1 class="text-7xl text-purple-500 my-8">
         @{data.username}
     </h1>
 
@@ -20,7 +20,7 @@
         src={data.photoURL ?? "/user.png"}
         alt="photoURL"
         width="256"
-        class="mx-auto"
+        class="mx-auto rounded-full"
     />
 
     <p class="text-xl my-8">{data.bio ?? "no bio yet..."}</p>

@@ -34,16 +34,21 @@ function userStore() {
         };
     }
 
-    const { subscribe } = writable(auth?.currentUser ?? null, (set) => {
-        unsubscribe = onAuthStateChanged(auth, (user) => {
-            set(user);
-        });
+    const { subscribe, set, update } = writable(
+        auth?.currentUser ?? null,
+        (set) => {
+            unsubscribe = onAuthStateChanged(auth, (user) => {
+                set(user);
+            });
 
-        return () => unsubscribe();
-    });
+            return () => unsubscribe();
+        }
+    );
 
     return {
         subscribe,
+        set,
+        update,
     };
 }
 

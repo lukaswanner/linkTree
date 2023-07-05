@@ -24,6 +24,7 @@ export const handle = (async ({ event, resolve }) => {
             published,
         };
     } catch (e) {
+        console.log("it failed!");
         event.locals.user = null;
     } finally {
         if (!theme || !themes.includes(theme)) {
