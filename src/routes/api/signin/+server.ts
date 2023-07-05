@@ -1,8 +1,8 @@
-import { adminAuth } from "$lib/server/admin";
+import { adminAuth, adminDB } from "$lib/server/admin";
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 
-export const POST: RequestHandler = async ({ request, cookies }) => {
+export const POST: RequestHandler = async ({ locals, request, cookies }) => {
     const { idToken } = await request.json();
 
     const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
@@ -28,7 +28,8 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     }
 };
 
-export const DELETE: RequestHandler = async ({ cookies }) => {
+export const DELETE: RequestHandler = async ({ locals, cookies }) => {
     cookies.delete("__session", { path: "/" });
+    locals.user = null;
     return json({ status: "signedOut" });
 };

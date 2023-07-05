@@ -1,6 +1,9 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import ThemeSelect from "./ThemeSelect.svelte";
+    import { auth } from "$lib/firebase";
+
+    import { signOut } from "firebase/auth";
 
     export let username: string | null | undefined;
     export let photo: string | null | undefined;
@@ -9,6 +12,12 @@
     $: len = $page.url.pathname.split("/").length;
     $: links = $page.url.pathname.split("/");
     $: home = $page.url.pathname === "/";
+
+    async function signOutSSR() {
+        const res = await fetch("/api/signin", { method: "DELETE" });
+        console.log(res);
+        await signOut(auth);
+    }
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
@@ -52,7 +61,7 @@
             <div
                 tabindex="0"
                 id="user-wrapper"
-                class="transition-colors focus:bg-primary hover:bg-primary cursor-pointer dropdown dropdown-bottom dropdown-end flex flex-row items-center gap-4 p-2 rounded-lg"
+                class="transition-colors focus:text-primary-content hover:text-primary-content focus:bg-primary-focus hover:bg-primary-focus cursor-pointer dropdown dropdown-bottom dropdown-end flex flex-row items-center gap-4 p-2 rounded-lg"
             >
                 <div class="avatar">
                     <div class="overflow-hidden w-10 rounded-full">
@@ -80,14 +89,24 @@
                 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
                 <ul
                     tabindex="0"
-                    class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                    class="dropdown-content z-[1] text-base-content menu p-2 shadow bg-base-100 rounded-box w-52"
                 >
-                    <li><a href="/{username}">Your Profile</a></li>
-                    <li><a href="/{username}/edit">Edit Profile</a></li>
+                    <li>
+                        <a class="links" href="/{username}">Your Profile</a>
+                    </li>
+                    <li>
+                        <a class="links" href="/{username}/edit">Edit Profile</a
+                        >
+                    </li>
+                    <li>
+                        <a class="links" on:click={signOutSSR} href="/"
+                            >Logout</a
+                        >
+                    </li>
                 </ul>
             </div>
         {:else}
-            <a href="/login" class="btn btn-accent">Login</a>
+            <a href="/login" class="btn btn-secondary">Login</a>
         {/if}
     </div>
 </div>
@@ -109,5 +128,9 @@
         opacity: 1 !important;
         border-top: 2px solid;
         border-right: 2px solid;
+    }
+
+    .links {
+        color: var(--pc) !important;
     }
 </style>
