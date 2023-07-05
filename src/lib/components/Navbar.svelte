@@ -92,16 +92,13 @@
                     class="dropdown-content z-[1] text-base-content menu p-2 shadow bg-base-100 rounded-box w-52"
                 >
                     <li>
-                        <a class="links" href="/{username}">Your Profile</a>
+                        <a href="/{username}">Your Profile</a>
                     </li>
                     <li>
-                        <a class="links" href="/{username}/edit">Edit Profile</a
-                        >
+                        <a href="/{username}/edit">Edit Profile</a>
                     </li>
                     <li>
-                        <a class="links" on:click={signOutSSR} href="/"
-                            >Logout</a
-                        >
+                        <a on:click={signOutSSR} href="/">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -128,9 +125,5 @@
         opacity: 1 !important;
         border-top: 2px solid;
         border-right: 2px solid;
-    }
-
-    .links {
-        color: var(--pc) !important;
     }
 </style>
