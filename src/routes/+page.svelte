@@ -1,8 +1,5 @@
 <script lang="ts">
-    import type { PageServerData } from "./$types";
-
-    export let data: PageServerData;
-    const username = data.user?.username;
+    import { user } from "$lib/firebase";
 </script>
 
 <svelte:head>
@@ -21,8 +18,8 @@
                 <p class="py-6 text-2xl">
                     One simple link to share your entire developer portfolio
                 </p>
-                {#if username}
-                    <a href="/{username}/edit" class="btn btn-primary"
+                {#if $user}
+                    <a href="/{$user?.displayName}/edit" class="btn btn-primary"
                         >Edit Profile</a
                     >
                 {:else}

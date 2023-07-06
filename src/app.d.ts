@@ -9,16 +9,13 @@ declare global {
         published: boolean;
         links: any[];
     }
-    interface User extends UserData {
-        uid: string;
-    }
     namespace App {
         interface Error {
             message: string;
             data?: Record;
         }
         interface Locals {
-            user: User | null;
+            uid: string | null;
         }
         // interface PageData {}
         // interface Platform {}

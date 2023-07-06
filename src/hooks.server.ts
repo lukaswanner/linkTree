@@ -12,20 +12,9 @@ export const handle = (async ({ event, resolve }) => {
         );
 
         const uid = decodedClaims.uid;
-        const userDoc = await adminDB.collection("users").doc(uid!).get();
-        const { username, links, photoURL, bio, published } = userDoc.data()!;
-
-        event.locals.user = {
-            uid: uid,
-            username,
-            links,
-            photoURL,
-            bio,
-            published,
-        };
+        event.locals.uid = uid;
     } catch (e) {
-        console.log("it failed!");
-        event.locals.user = null;
+        event.locals.uid = null;
     } finally {
         if (!theme || !themes.includes(theme)) {
             return await resolve(event);

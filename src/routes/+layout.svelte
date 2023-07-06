@@ -2,12 +2,10 @@
     import Navbar from "$lib/components/Navbar.svelte";
     import { user, userData } from "$lib/firebase";
     import "../app.css";
-    import type { LayoutServerData } from "./$types";
 
     // preload global data that we use in child components
     $user;
     $userData;
-    export let data: LayoutServerData;
 </script>
 
 <svelte:head>
@@ -16,9 +14,9 @@
 
 <div class="min-h-screen flex flex-col">
     <Navbar
-        username={data.user?.username}
+        username={$userData?.username}
         email={$user?.email}
-        photo={data.user?.photoURL}
+        photo={$userData?.photoURL}
     />
     <slot />
 </div>
