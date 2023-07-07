@@ -12,6 +12,6 @@
 
     <div class="flex flex-col gap-4 w-full items-center mt-8">
         <UserLink title="Home" url="/" />
-        <UserLink title="Create @{$page.error?.data?.username}" url="/login" />
+        <UserLink title="Create @{$page.error?.data?.username}" url="/signup" />
     </div>
 </main>

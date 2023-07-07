@@ -23,8 +23,8 @@
                         >Edit Profile</a
                     >
                 {:else}
-                    <a href="/login" class="btn btn-primary">Get Started</a>
-                    <a href="/fireship" class="btn btn-secondary"
+                    <a href="/signup" class="btn btn-primary">Get Started</a>
+                    <a href="/Lukas" class="btn btn-secondary"
                         >Example Profile</a
                     >
                 {/if}

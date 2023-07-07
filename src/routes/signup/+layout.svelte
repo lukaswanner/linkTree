@@ -6,20 +6,21 @@
 <nav class="flex justify-center my-6">
     <ul class="steps">
         <a
-            href="/login"
+            href="/signup"
             class="step transition-all step-primary after:transition-all"
             >Sign In</a
         >
         <a
-            href="/login/username"
+            href="/signup/username"
             class="step transition-all after:transition-all"
             class:step-primary={$page.route.id?.match(/username|photo/g)}
             >Choose Username</a
         >
         <a
-            href="/login/photo"
+            href="/signup/photo"
             class="step transition-all after:transition-all"
-            class:step-primary={$page.route.id?.match(/photo/g)}>Upload Photo</a
+            class:step-primary={$page.route.id?.match(/photo/g)}
+            >Upload Photo</a
         >
     </ul>
 </nav>

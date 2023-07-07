@@ -5,8 +5,10 @@
 {#if $user}
     <slot />
 {:else}
-    <p class="text-error">
+    <div class="flex flex-col gap-4 items-center">
+    <h2 class="text-error text-2xl">
         You must be signed in to view this page.
-        <a class="btn btn-primary" href="/login">Sign in</a>
-    </p>
+    </h2>
+        <a class="btn btn-primary w-fit" href="/signup">Sign in</a>
+</div>
 {/if}

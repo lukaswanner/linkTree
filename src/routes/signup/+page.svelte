@@ -28,7 +28,7 @@
     }
 </script>
 
-<h2>Login</h2>
+<h2 class="text-4xl mb-4">Sign In</h2>
 
 {#if $user}
     <h2 class="card-title">Welcome, {$user.displayName}</h2>

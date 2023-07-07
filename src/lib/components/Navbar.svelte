@@ -103,7 +103,7 @@
                 </ul>
             </div>
         {:else}
-            <a href="/login" class="btn btn-secondary">Login</a>
+            <a href="/signup" class="btn btn-secondary">Sign Up</a>
         {/if}
     </div>
 </div>
