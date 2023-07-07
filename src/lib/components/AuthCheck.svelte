@@ -9,6 +9,6 @@
     <h2 class="text-error text-2xl">
         You must be signed in to view this page.
     </h2>
-        <a class="btn btn-primary w-fit" href="/signup">Sign in</a>
+        <a class="btn btn-primary w-fit" href="/signup">Sign Up</a>
 </div>
 {/if}
