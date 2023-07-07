@@ -29,6 +29,7 @@
         batch.set(doc(db, "users", $user!.uid), {
             username,
             photoURL: $user?.photoURL ?? null,
+            photoChanged: false,
             published: true,
             bio: "I am the Walrus",
             links: [
