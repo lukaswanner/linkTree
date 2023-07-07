@@ -61,6 +61,7 @@
         <p class="text-sm">(Usernames cannot be changed)</p>
         <a class="btn btn-primary" href="/signup/photo">Upload Profile Image</a>
     {:else}
+<h2 class="text-4xl mb-4">Choose Username</h2>
         <form class="w-2/5" on:submit|preventDefault={confirmUsername}>
             <input
                 type="text"
@@ -73,7 +74,7 @@
                 class:input-success={isAvailable && isValid && !loading}
             />
 
-            <div class="my-4 min-h-16 px-8 w-full">
+            <div class="my-6 px-8 w-full">
                 {#if loading}
                     <p class="text-secondary">
                         Checking availabilty of @{username}...

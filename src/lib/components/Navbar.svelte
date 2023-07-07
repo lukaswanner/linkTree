@@ -4,7 +4,6 @@
     import { auth } from "$lib/firebase";
 
     import { signOut } from "firebase/auth";
-    import { user, userData } from "$lib/firebase";
 
     export let username: string | null | undefined;
     export let photo: string | null | undefined;
@@ -15,7 +14,7 @@
     $: home = $page.url.pathname === "/";
 
     async function signOutSSR() {
-        const res = await fetch("/api/signin", { method: "DELETE" });
+        await fetch("/api/signin", { method: "DELETE" });
         await signOut(auth);
     }
 </script>

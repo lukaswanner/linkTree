@@ -1,7 +1,6 @@
 <script lang="ts">
     import UserLink from "$lib/components/UserLink.svelte";
     import type { PageData } from "./$types";
-    import { page } from "$app/stores";
 
     export let data: PageData;
 </script>
@@ -24,7 +23,7 @@
     />
 
     <p class="text-xl my-8">{data.bio ?? "no bio yet..."}</p>
-    <ul class="list-none">
+    <ul class="list-none pl-0">
         {#each data.links as item}
             <li class="my-2">
                 <UserLink {...item} />

@@ -6,7 +6,7 @@
     <title>Todo.change - a place for links</title>
     <meta
         name="description"
-        content="Demo project for the Full SvelteKit Course by Fireship"
+        content="one link to rule them all"
     />
 </svelte:head>
 
