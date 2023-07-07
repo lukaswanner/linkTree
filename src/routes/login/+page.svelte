@@ -13,7 +13,7 @@
 
         const idToken = await credential.user.getIdToken();
 
-        const res = await fetch("/api/signin", {
+        await fetch("/api/signin", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -23,7 +23,7 @@
     }
 
     async function signOutSSR() {
-        const res = await fetch("/api/signin", { method: "DELETE" });
+        await fetch("/api/signin", { method: "DELETE" });
         await signOut(auth);
     }
 </script>
