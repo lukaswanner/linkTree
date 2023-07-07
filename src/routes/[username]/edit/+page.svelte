@@ -12,6 +12,13 @@
     } from "firebase/firestore";
     import { writable } from "svelte/store";
 
+    type Link = {
+        icon: string;
+        title: string;
+        url: string;
+        id: string;
+    };
+
     const icons = [
         "Twitter",
         "YouTube",
@@ -20,18 +27,26 @@
         "GitHub",
         "Custom",
     ];
+
     const formDefaults = {
         icon: "custom",
         title: "",
         url: "https://",
     };
-    const formData = writable(formDefaults);
+
+    const formData = writable({
+        icon: "custom",
+        title: "",
+        url: "https://",
+    });
 
     let showForm = false;
 
     $: urlIsValid = $formData.url.match(/^(ftp|http|https):\/\/[^ "]+$/);
     $: titleIsValid = $formData.title.length < 20 && $formData.title.length > 0;
     $: formIsValid = urlIsValid && titleIsValid;
+    $: titleIsTouched = $formData.title.length > 0;
+    $: urlIsTouched = $formData.url !== formDefaults.url;
 
     function sortList(e: CustomEvent) {
         const newList = e.detail;
@@ -39,7 +54,7 @@
         setDoc(userRef, { links: newList }, { merge: true });
     }
 
-    async function addLink(e: SubmitEvent) {
+    async function addLink() {
         const userRef = doc(db, "users", $user!.uid);
 
         await updateDoc(userRef, {
@@ -58,14 +73,14 @@
         showForm = false;
     }
 
-    async function deleteLink(item: any) {
+    async function deleteLink(item: Link) {
         const userRef = doc(db, "users", $user!.uid);
         await updateDoc(userRef, {
             links: arrayRemove(item),
         });
     }
 
-    async function toggleProfileStatus(item: any) {
+    async function toggleProfileStatus() {
         const userRef = doc(db, "users", $user!.uid);
         await updateDoc(userRef, {
             published: !$userData?.published,
@@ -80,10 +95,6 @@
 
 <main class="max-w-xl mx-auto">
     {#if $userData?.username == $page.params.username}
-        <h1 class="mx-2 text-2xl font-bold mt-8 mb-4 text-center">
-            Edit your Profile
-        </h1>
-
         <div class="text-center mb-8">
             <p>
                 Profile Link:
@@ -92,6 +103,17 @@
                 </a>
             </p>
         </div>
+
+        <h1 class="mx-2 text-2xl font-bold mt-8 mb-4 text-center">
+            @{$userData?.username}
+        </h1>
+
+        <img
+            src={$userData.photoURL ?? "/user.png"}
+            alt="photoURL"
+            width="256"
+            class="mx-auto rounded-full"
+        />
 
         <div
             class="flex flex-row gap-4 items-center justify-center text-center my-4"
@@ -126,22 +148,14 @@
             </label>
         </form>
 
-        <SortableList
-            list={$userData?.links}
-            on:sort={sortList}
-            let:item
-            let:index
-        >
-            <div class="group relative">
-                <UserLink {...item} />
-                <button
-                    on:click={() => deleteLink(item)}
-                    class="btn btn-xs btn-error invisible group-hover:visible transition-all absolute -right-6 bottom-10"
-                    >Delete</button
-                >
-            </div>
-        </SortableList>
-        {#if showForm}
+        {#if !showForm}
+            <button
+                on:click={() => (showForm = true)}
+                class="btn btn-outline btn-info block mx-auto my-4"
+            >
+                Add a Link
+            </button>
+        {:else}
             <form
                 on:submit|preventDefault={addLink}
                 class="bg-base-200 p-6 w-full mx-auto rounded-xl"
@@ -172,10 +186,10 @@
                     />
                 </div>
                 <div class="my-4">
-                    {#if !titleIsValid}
+                    {#if titleIsTouched && !titleIsValid}
                         <p class="text-error text-xs">Must have valid title</p>
                     {/if}
-                    {#if !urlIsValid}
+                    {#if urlIsTouched && !urlIsValid}
                         <p class="text-error text-xs">Must have a valid URL</p>
                     {/if}
                     {#if formIsValid}
@@ -197,13 +211,17 @@
                     >
                 </div>
             </form>
-        {:else}
-            <button
-                on:click={() => (showForm = true)}
-                class="btn btn-outline btn-info block mx-auto my-4"
-            >
-                Add a Link
-            </button>
         {/if}
+
+        <SortableList list={$userData?.links} on:sort={sortList} let:item>
+            <div class="group relative">
+                <UserLink {...item} />
+                <button
+                    on:click={() => deleteLink(item)}
+                    class="btn btn-xs btn-error invisible group-hover:visible transition-all absolute -right-6 bottom-10"
+                    >Delete</button
+                >
+            </div>
+        </SortableList>
     {/if}
 </main>

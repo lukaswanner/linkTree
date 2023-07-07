@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { user } from "$lib/firebase";
+    import { userData } from "$lib/firebase";
 </script>
 
 <svelte:head>
@@ -18,8 +18,8 @@
                 <p class="py-6 text-2xl">
                     One simple link to share your entire developer portfolio
                 </p>
-                {#if $user}
-                    <a href="/{$user?.displayName}/edit" class="btn btn-primary"
+                {#if $userData}
+                    <a href="/{$userData.username}/edit" class="btn btn-primary"
                         >Edit Profile</a
                     >
                 {:else}
