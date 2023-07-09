@@ -27,8 +27,12 @@
     <h2 class="card-title">Welcome, {$user.displayName}</h2>
     <p class="text-center text-success">You are logged in</p>
     {#if !$userData}
-        <a href="/signup" class="btn btn-warning mt-8"
+        <a href="/signup" class="btn btn-warning mt-4"
             >Account is not yet registered</a
+        >
+    {:else}
+        <a href="/{$userData.username}" class="btn btn-success mt-4"
+            >Your Profile</a
         >
     {/if}
 {:else}
