@@ -1,16 +1,11 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import AddLinkForm from "$lib/components/AddLinkForm.svelte";
+    import EditLinkForm from "$lib/components/EditLinkForm.svelte";
     import SortableList from "$lib/components/SortableList.svelte";
     import UserLink from "$lib/components/UserLink.svelte";
     import { db, userData, user } from "$lib/firebase";
-    import {
-        arrayRemove,
-        arrayUnion,
-        doc,
-        setDoc,
-        updateDoc,
-    } from "firebase/firestore";
-    import { writable } from "svelte/store";
+    import { arrayRemove, doc, setDoc, updateDoc } from "firebase/firestore";
 
     type Link = {
         icon: string;
@@ -19,58 +14,13 @@
         id: string;
     };
 
-    const icons = [
-        "Twitter",
-        "YouTube",
-        "TikTok",
-        "LinkedIn",
-        "GitHub",
-        "Custom",
-    ];
-
-    const formDefaults = {
-        icon: "custom",
-        title: "",
-        url: "https://",
-    };
-
-    const formData = writable({
-        icon: "custom",
-        title: "",
-        url: "https://",
-    });
-
     let showForm = false;
-
-    $: urlIsValid = $formData.url.match(/^(ftp|http|https):\/\/[^ "]+$/);
-    $: titleIsValid = $formData.title.length < 20 && $formData.title.length > 0;
-    $: formIsValid = urlIsValid && titleIsValid;
-    $: titleIsTouched = $formData.title.length > 0;
-    $: urlIsTouched = $formData.url !== formDefaults.url;
+    let editLink = true;
 
     function sortList(e: CustomEvent) {
         const newList = e.detail;
         const userRef = doc(db, "users", $user!.uid);
         setDoc(userRef, { links: newList }, { merge: true });
-    }
-
-    async function addLink() {
-        const userRef = doc(db, "users", $user!.uid);
-
-        await updateDoc(userRef, {
-            links: arrayUnion({
-                ...$formData,
-                id: Date.now().toString(),
-            }),
-        });
-
-        formData.set({
-            icon: "",
-            title: "",
-            url: "",
-        });
-
-        showForm = false;
     }
 
     async function deleteLink(item: Link) {
@@ -85,11 +35,6 @@
         await updateDoc(userRef, {
             published: !$userData?.published,
         });
-    }
-
-    function cancelLink() {
-        formData.set(formDefaults);
-        showForm = false;
     }
 </script>
 
@@ -108,12 +53,12 @@
             @{$userData?.username}
         </h1>
 
-            <img
-                src={$userData.photoURL ?? "/user.png"}
-                alt="photoURL"
-                width="256"
-                class="mx-auto rounded-full"
-            />
+        <img
+            src={$userData.photoURL ?? "/user.png"}
+            alt="photoURL"
+            width="256"
+            class="mx-auto rounded-full"
+        />
 
         <div
             class="flex flex-row gap-4 items-center justify-center text-center my-4"
@@ -127,7 +72,7 @@
                 href="/{$userData.username}/edit/photo"
                 class="btn btn-outline flex-1"
             >
-            Edit Picture
+                Edit Picture
             </a>
         </div>
 
@@ -160,61 +105,7 @@
                 Add a Link
             </button>
         {:else}
-            <form
-                on:submit|preventDefault={addLink}
-                class="bg-base-200 p-6 w-full mx-auto rounded-xl"
-            >
-                <div class="flex flex-col gap-4">
-                    <select
-                        name="icon"
-                        class="select select-sm"
-                        bind:value={$formData.icon}
-                    >
-                        {#each icons as icon}
-                            <option value={icon.toLowerCase()}>{icon}</option>
-                        {/each}
-                    </select>
-                    <input
-                        name="title"
-                        type="text"
-                        placeholder="Title"
-                        class="input input-sm"
-                        bind:value={$formData.title}
-                    />
-                    <input
-                        name="url"
-                        type="text"
-                        placeholder="URL"
-                        class="input input-sm"
-                        bind:value={$formData.url}
-                    />
-                </div>
-                <div class="my-4">
-                    {#if titleIsTouched && !titleIsValid}
-                        <p class="text-error text-xs">Must have valid title</p>
-                    {/if}
-                    {#if urlIsTouched && !urlIsValid}
-                        <p class="text-error text-xs">Must have a valid URL</p>
-                    {/if}
-                    {#if formIsValid}
-                        <p class="text-success text-xs">Looks good!</p>
-                    {/if}
-                </div>
-
-                <div class="flex flex-row gap-4">
-                    <button
-                        disabled={!formIsValid}
-                        type="submit"
-                        class="btn btn-success block">Add Link</button
-                    >
-
-                    <button
-                        type="button"
-                        class="btn btn-error"
-                        on:click={cancelLink}>Cancel</button
-                    >
-                </div>
-            </form>
+            <AddLinkForm close={() => (showForm = false)} />
         {/if}
 
         <SortableList list={$userData?.links} on:sort={sortList} let:item>
@@ -226,6 +117,9 @@
                     >Delete</button
                 >
             </div>
+            {#if editLink}
+                <EditLinkForm {...item} close={() => (showForm = false)} />
+            {/if}
         </SortableList>
     {/if}
 </main>
