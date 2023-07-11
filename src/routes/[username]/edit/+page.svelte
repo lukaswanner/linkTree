@@ -1,7 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import AddLinkForm from "$lib/components/AddLinkForm.svelte";
-    import EditLinkForm from "$lib/components/EditLinkForm.svelte";
     import SortableList from "$lib/components/SortableList.svelte";
     import UserLink from "$lib/components/UserLink.svelte";
     import { db, userData, user } from "$lib/firebase";
@@ -15,7 +14,6 @@
     };
 
     let showForm = false;
-    let editLink = true;
 
     function sortList(e: CustomEvent) {
         const newList = e.detail;
@@ -36,6 +34,7 @@
             published: !$userData?.published,
         });
     }
+
 </script>
 
 <main class="max-w-xl mx-auto">
@@ -110,16 +109,13 @@
 
         <SortableList list={$userData?.links} on:sort={sortList} let:item>
             <div class="group relative">
-                <UserLink {...item} />
+                <UserLink editMode {...item}/>
                 <button
                     on:click={() => deleteLink(item)}
-                    class="btn btn-xs btn-error invisible group-hover:visible transition-all absolute -right-6 bottom-10"
+                    class="btn btn-xs btn-error invisible group-hover:visible transition-all absolute -right-6 -top-2"
                     >Delete</button
                 >
             </div>
-            {#if editLink}
-                <EditLinkForm {...item} close={() => (showForm = false)} />
-            {/if}
         </SortableList>
     {/if}
 </main>

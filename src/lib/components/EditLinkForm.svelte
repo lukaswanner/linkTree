@@ -1,11 +1,17 @@
 <script lang="ts">
     import { db, user } from "$lib/firebase";
-    import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
+    import {
+        arrayRemove,
+        arrayUnion,
+        doc,
+        updateDoc,
+    } from "firebase/firestore";
     import { writable } from "svelte/store";
 
     export let icon: string;
     export let url: string;
     export let title: string;
+    export let id: string;
 
     export let close: Function;
 
@@ -26,20 +32,21 @@
 
     async function updateLink() {
         const userRef = doc(db, "users", $user!.uid);
-        const userData = (await getDoc(userRef)).data();
-        if(userData){
-            console.log(userData)
-        }
-        /*
+
         await updateDoc(userRef, {
-            links: arrayUnion({
-                ...$formData,
-                id: Date.now().toString(),
+            links: arrayUnion({ ...$formData,id: Date.now().toString() }),
+        });
+
+        await updateDoc(userRef, {
+            links: arrayRemove({
+                icon,
+                url,
+                title,
+                id,
             }),
         });
 
         close();
-        */
     }
 
     function cancelLink() {
