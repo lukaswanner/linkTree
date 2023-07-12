@@ -4,7 +4,7 @@
     export let icon = "custom";
     export let url = "foo";
     export let title = "some cool title";
-    export let id: string;
+    export let id = '0';
 
 
     export let editMode = false;

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import UserLink from "$lib/components/UserLink.svelte";
+  import UserLink from "$lib/components/UserLink.svelte";
 </script>
 
 <main class="prose flex flex-col justify-center items-center h-screen mx-auto">

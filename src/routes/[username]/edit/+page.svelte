@@ -64,7 +64,7 @@
         >
             <a
                 class="btn btn-outline flex-1"
-                href={`/${$userData.username}/bio`}>Edit Bio</a
+                href={`/${$userData.username}/edit/bio`}>Edit Bio</a
             >
             <a
                 on:click={() => void 0}
