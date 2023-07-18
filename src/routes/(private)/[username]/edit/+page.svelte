@@ -58,9 +58,35 @@
             class="mx-auto rounded-xl"
         />
 
-        <h1 class="mt-4 text-3xl mb-4 text-center">
-            Welcome {$userData?.username}
-        </h1>
+        <div class="flex flex-row items-center justify-between">
+            <h1 class="mt-4 text-3xl mb-4 text-center">
+                Welcome {$userData?.username}
+            </h1>
+            <button
+                class="btn btn-success relative customButton rounded-lg w-24"
+                class:publishing={loading}
+                class:published={done}
+                on:click={toggleProfileStatus}
+            >
+                {$userData?.published ? "Published" : "Hidden"}
+                <div class="hiddenIconWrapper">
+                    <span
+                        class="loading loading-spinner hiddenIcon text-primary"
+                    />
+                </div>
+                <div class="hiddenCheckmarkWrapper">
+                    <svg
+                        class="hiddenIcon text-primary"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 448 512"
+                        fill="currentColor"
+                        ><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
+                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                        /></svg
+                    >
+                </div>
+            </button>
+        </div>
 
         <p class="base-content">
             Manage your links, photo and publish your profile.
@@ -83,41 +109,6 @@
                 Edit Picture
             </a>
         </div>
-
-        <form class="form-control">
-            <label class="label cursor-pointer flex flex-row items-start gap-4">
-                <span class="label-text">
-                    <div
-                        class="tooltip group-hover:tooltip-open"
-                        data-tip="If public, the world can see your profile"
-                    />
-                </span>
-                <button
-                    class="btn relative customButton rounded-lg w-36"
-                    class:publishing={loading}
-                    class:published={done}
-                    on:click={toggleProfileStatus}
-                >
-                    {$userData?.published ? "Published" : "Hidden"}
-                    <div class="hiddenIconWrapper">
-                        <span
-                            class="loading loading-spinner hiddenIcon text-primary"
-                        />
-                    </div>
-                    <div class="hiddenCheckmarkWrapper">
-                        <svg
-                            class="hiddenIcon text-primary"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"
-                            fill="currentColor"
-                            ><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
-                                d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                            /></svg
-                        >
-                    </div>
-                </button>
-            </label>
-        </form>
 
         <div class="divider" />
         {#if !showForm}
@@ -159,7 +150,7 @@
         justify-content: center;
         position: relative;
         transition: width 0.25s ease 0.25s, border-radius 0.25s ease 0.25s,
-            color 0.25s ease 0.5s;
+            color 0s ease 0.5s;
     }
 
     .publishing,
