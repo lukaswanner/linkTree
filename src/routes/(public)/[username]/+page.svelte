@@ -10,8 +10,8 @@
     <meta name="description" content={data.bio} />
 </svelte:head>
 
-<main class="prose text-center mx-auto mt-8">
-    <h1 class="text-7xl text-purple-500 my-8">
+<main class="text-center mx-auto mt-8">
+    <h1 class="font-bold text-7xl text-purple-500 my-8">
         @{data.username}
     </h1>
 
@@ -23,9 +23,9 @@
     />
 
     <p class="text-xl my-8">{data.bio ?? "no bio yet..."}</p>
-    <ul class="list-none pl-0">
+    <ul class="list-none p-0">
         {#each data.links as item}
-            <li class="my-2">
+            <li class="flex justify-center my-2">
                 <UserLink {...item} />
             </li>
         {/each}
