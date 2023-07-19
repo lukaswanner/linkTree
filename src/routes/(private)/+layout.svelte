@@ -8,11 +8,11 @@
     $userData;
 </script>
 
-<Navbar
-    username={$userData?.username}
-    email={$user?.email}
-    photo={$userData?.photoURL}
-/>
-<div class="flex flex-col">
+<div class="flex flex-col h-full">
+    <Navbar
+        username={$userData?.username}
+        email={$user?.email}
+        photo={$userData?.photoURL}
+    />
     <slot />
 </div>
