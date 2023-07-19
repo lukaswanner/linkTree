@@ -1,4 +1,3 @@
-
 <script lang="ts">
     import { user, userData } from "$lib/firebase";
     import "../app.css";
@@ -7,10 +6,6 @@
     $user;
     $userData;
 </script>
-
-<svelte:head>
-    <link rel="icon" href="https://fav.farm/🪶" />
-</svelte:head>
 
 <div class="min-h-screen flex flex-col">
     <slot />

@@ -16,6 +16,8 @@
     let showForm = false;
     let loading = false;
     let done = false;
+    let currentItem;
+    let editLink: HTMLDialogElement;
 
     function sortList(e: CustomEvent) {
         const newList = e.detail;
@@ -49,7 +51,7 @@
     }
 </script>
 
-<main class="max-w-xl mx-auto">
+<main class="max-w-xl mx-auto flex flex-col gap-4">
     {#if $userData?.username == $page.params.username}
         <img
             src={$userData.photoURL ?? "/user.png"}
@@ -58,25 +60,34 @@
             class="mx-auto rounded-xl"
         />
 
-        <div class="flex flex-row items-center justify-between">
-            <h1 class="mt-4 text-3xl mb-4 text-center">
+        <div class="mt-8 mb-4 flex flex-row items-center justify-between">
+            <h1 class="text-3xl text-center">
                 Welcome {$userData?.username}
             </h1>
+        </div>
+
+        <p class="base-content">
+            Manage your links, photo and publish your profile.
+        </p>
+
+        <div class="flex gap-4">
             <button
-                class="btn btn-success relative customButton rounded-lg w-24"
+                class="btn btn-outline relative customButton rounded-lg w-[8ch]"
                 class:publishing={loading}
                 class:published={done}
+                class:btn-success={$userData?.published}
+                class:btn-error={!$userData?.published}
                 on:click={toggleProfileStatus}
             >
-                {$userData?.published ? "Published" : "Hidden"}
+                {$userData?.published ? "Public" : "Private"}
                 <div class="hiddenIconWrapper">
                     <span
-                        class="loading loading-spinner hiddenIcon text-primary"
+                        class="loading loading-spinner hiddenIcon text-base-content"
                     />
                 </div>
                 <div class="hiddenCheckmarkWrapper">
                     <svg
-                        class="hiddenIcon text-primary"
+                        class="hiddenIcon text-base-content"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 448 512"
                         fill="currentColor"
@@ -86,16 +97,23 @@
                     >
                 </div>
             </button>
+            <button class="btn btn-outline rounded-lg">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="1em"
+                    fill="currentColor"
+                    viewBox="0 0 640 512"
+                    ><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
+                        d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"
+                    /></svg
+                >
+                <p class="text-">Copy link</p>
+            </button>
         </div>
-
-        <p class="base-content">
-            Manage your links, photo and publish your profile.
-        </p>
-
-        <div class="divider" />
+        <div class="divider my-0" />
 
         <div
-            class="flex flex-row gap-4 items-center justify-center text-center my-4"
+            class="flex flex-row gap-4 items-center justify-center text-center"
         >
             <a
                 class="btn btn-outline flex-1"
@@ -110,13 +128,22 @@
             </a>
         </div>
 
-        <div class="divider" />
+        <div class="divider my-0" />
         {#if !showForm}
             <button
                 on:click={() => (showForm = true)}
-                class="btn btn-outline btn-info block mx-auto my-4"
+                class="btn btn-outline mr-auto"
             >
-                Add a Link
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    height="1em"
+                    viewBox="0 0 448 512"
+                    ><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
+                        d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+                    />
+                </svg>
+                Link
             </button>
         {:else}
             <AddLinkForm close={() => (showForm = false)} />
@@ -124,23 +151,37 @@
 
         <SortableList list={$userData?.links} on:sort={sortList} let:item>
             <div class="group relative">
-                <UserLink editMode {...item} />
+                <UserLink
+                    editMode
+                    {...item}
+                    openModal={() => {
+                        currentItem = item;
+                        editLink.showModal();
+                    }}
+                />
                 <button
-                    on:click={() => deleteLink(item)}
-                    class="btn btn-xs btn-error invisible group-hover:visible transition-all absolute -right-6 -top-2"
-                    >Delete</button
+                    on:click={() => {
+                        currentItem = item;
+                        editLink.showModal();
+                    }}
+                    class="btn btn-xs btn-secondary invisible group-hover:visible transition-all absolute -right-6 -top-2"
+                    >Edit</button
                 >
             </div>
         </SortableList>
+        <dialog bind:this={editLink} class="modal">
+            <form method="dialog" class="modal-box">
+                <h3 class="font-bold text-lg">Hello!</h3>
+                <div class="modal-action">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button on:click={() => console.log("hi")} class="btn"
+                        >Save</button
+                    >
+                    <button class="btn">Close</button>
+                </div>
+            </form>
+        </dialog>
     {/if}
-    <div class="text-center mb-8">
-        <p>
-            Profile Link:
-            <a href={`/${$userData?.username}`} class="link link-accent">
-                https://todo.change/{$userData?.username}
-            </a>
-        </p>
-    </div>
 </main>
 
 <style>
@@ -150,7 +191,7 @@
         justify-content: center;
         position: relative;
         transition: width 0.25s ease 0.25s, border-radius 0.25s ease 0.25s,
-            color 0s ease 0.5s;
+            color 0s;
     }
 
     .publishing,
@@ -160,8 +201,14 @@
         border-radius: 9999px;
         overflow: hidden;
         color: rgba(0, 0, 0, 0);
+        border-color: hsl(var(--bc));
         transition: color 0s, width 0.25s ease 0.25s,
             border-radius 0.25s ease 0.25s;
+    }
+
+    .publishing:hover,
+    .published:hover {
+        background-color: inherit;
     }
 
     .publishing {

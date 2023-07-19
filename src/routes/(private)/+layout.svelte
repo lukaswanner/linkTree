@@ -1,6 +1,6 @@
 <script lang="ts">
     import Navbar from "$lib/components/Navbar.svelte";
-import { user, userData } from "$lib/firebase";
+    import { user, userData } from "$lib/firebase";
     import "../../app.css";
 
     // preload global data that we use in child components
@@ -8,14 +8,10 @@ import { user, userData } from "$lib/firebase";
     $userData;
 </script>
 
-<svelte:head>
-    <link rel="icon" href="https://fav.farm/🪶" />
-</svelte:head>
-
 <Navbar
-        username={$userData?.username}
-        email={$user?.email}
-        photo={$userData?.photoURL}
+    username={$userData?.username}
+    email={$user?.email}
+    photo={$userData?.photoURL}
 />
 <div class="min-h-screen flex flex-col">
     <slot />

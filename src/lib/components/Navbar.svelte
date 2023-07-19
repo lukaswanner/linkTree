@@ -22,7 +22,10 @@
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <div class="flex flex-row justify-between items-center pl-4 pr-4 pt-2 pb-2">
     <div class="flex flex-col">
-        <a href="/" class="text-2xl font-bold">TODO.CHANGE</a>
+        <a href="/" class="text-2xl font-bold flex flex-row gap-2 items-center">
+            Lighthouse
+            <img src="/logo.png" class="h-12 w-12" alt="logo" />
+        </a>
         {#if !home}
             <div class=" text-sm breadcrumbs capitalize p-0">
                 <ul>
