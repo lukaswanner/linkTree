@@ -7,7 +7,7 @@
     <meta name="description" content="one link to rule them all" />
 </svelte:head>
 
-<main class="flex w-full flex-1">
+<main class="flex w-full">
     <div class="hero bg-base-200">
         <div class="hero-content text-center">
             <div class="w-full">

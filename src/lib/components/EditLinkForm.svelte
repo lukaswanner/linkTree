@@ -8,10 +8,14 @@
     } from "firebase/firestore";
     import { writable } from "svelte/store";
 
-    export let icon: string;
-    export let url: string;
-    export let title: string;
-    export let id: string;
+    type Link = {
+        icon: string;
+        title: string;
+        url: string;
+        id: string;
+    };
+
+    export let link: Link;
 
     const icons = [
         "Twitter",
@@ -23,9 +27,9 @@
     ];
 
     const formData = writable({
-        icon,
-        title,
-        url,
+        icon: link.icon,
+        title: link.title,
+        url: link.url,
     });
 
     async function updateLink() {
@@ -37,20 +41,28 @@
 
         await updateDoc(userRef, {
             links: arrayRemove({
-                icon,
-                url,
-                title,
-                id,
+                icon: link.icon,
+                url: link.url,
+                title: link.title,
+                id: link.id,
             }),
+        });
+    }
+
+    async function deleteLink() {
+        const userRef = doc(db, "users", $user!.uid);
+        await updateDoc(userRef, {
+            links: arrayRemove(link),
         });
     }
 
     $: urlIsValid = $formData.url.match(/^(ftp|http|https):\/\/[^ "]+$/);
     $: titleIsValid = $formData.title.length < 20 && $formData.title.length > 0;
     $: formIsValid = urlIsValid && titleIsValid;
-    $: titleIsTouched = $formData.title != title;
+    $: titleIsTouched = $formData.title != link.title;
 </script>
 
+<h1 class="font-bold text-lg">Edit link</h1>
 <div class="flex flex-col gap-4">
     <label for="icon" class="label opacity-40">Link logo</label>
     <select
@@ -85,18 +97,29 @@
         <p class="text-error text-xs">Must have a valid URL</p>
     {/if}
 </div>
-<div class="my-4">
-    {#if formIsValid}
-        <p class="text-success text-xs">Looks good!</p>
-    {/if}
-</div>
 
-<div class="modal-action">
+<div class="flex justify-between items-center">
+    <div class="modal-action justify-center">
+        <button
+            disabled={!formIsValid}
+            on:click={updateLink}
+            class="btn btn-success block">Save Link</button
+        >
+
+        <button class="btn btn-error">Close</button>
+    </div>
     <button
-        disabled={!formIsValid}
-        on:click={updateLink}
-        class="btn btn-success block">Save Link</button
+        on:click={deleteLink}
+        class="btn btn-square btn-error btn-outline mt-6"
     >
-
-    <button class="btn btn-error">Close</button>
+        <svg
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            height="1em"
+            viewBox="0 0 448 512"
+            ><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
+                d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"
+            />
+        </svg>
+    </button>
 </div>

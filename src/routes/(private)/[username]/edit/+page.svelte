@@ -5,7 +5,7 @@
     import SortableList from "$lib/components/SortableList.svelte";
     import UserLink from "$lib/components/UserLink.svelte";
     import { db, userData, user } from "$lib/firebase";
-    import { arrayRemove, doc, setDoc, updateDoc } from "firebase/firestore";
+    import { doc, setDoc, updateDoc } from "firebase/firestore";
 
     type Link = {
         icon: string;
@@ -14,23 +14,16 @@
         id: string;
     };
 
-    let showForm = false;
     let loading = false;
     let done = false;
     let currentItem: Link;
+    let addLink: HTMLDialogElement;
     let editLink: HTMLDialogElement;
 
     function sortList(e: CustomEvent) {
         const newList = e.detail;
         const userRef = doc(db, "users", $user!.uid);
         setDoc(userRef, { links: newList }, { merge: true });
-    }
-
-    async function deleteLink(item: Link) {
-        const userRef = doc(db, "users", $user!.uid);
-        await updateDoc(userRef, {
-            links: arrayRemove(item),
-        });
     }
 
     async function toggleProfileStatus() {
@@ -52,7 +45,7 @@
     }
 </script>
 
-<main class="max-w-xl mx-auto flex flex-col gap-4">
+<main class="max-w-xl mx-auto flex flex-col gap-4 pt-8">
     {#if $userData?.username == $page.params.username}
         <img
             src={$userData.photoURL ?? "/user.png"}
@@ -130,25 +123,26 @@
         </div>
 
         <div class="divider my-0" />
-        {#if !showForm}
-            <button
-                on:click={() => (showForm = true)}
-                class="btn btn-outline mr-auto"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    height="1em"
-                    viewBox="0 0 448 512"
-                    ><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
-                        d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
-                    />
-                </svg>
-                Link
-            </button>
-        {:else}
-            <AddLinkForm close={() => (showForm = false)} />
-        {/if}
+        <button
+            on:click={() => addLink.showModal()}
+            class="btn btn-outline mr-auto"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                height="1em"
+                viewBox="0 0 448 512"
+                ><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
+                    d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+                />
+            </svg>
+            Link
+        </button>
+        <dialog bind:this={addLink} class="modal">
+            <form method="dialog" class="modal-box">
+                <AddLinkForm />
+            </form>
+        </dialog>
 
         <SortableList list={$userData?.links} on:sort={sortList} let:item>
             <div class="group relative">
@@ -174,7 +168,7 @@
             <form method="dialog" class="modal-box">
                 {#key currentItem}
                     {#if currentItem}
-                        <EditLinkForm {...currentItem} />
+                        <EditLinkForm link={currentItem} />
                     {/if}
                 {/key}
             </form>

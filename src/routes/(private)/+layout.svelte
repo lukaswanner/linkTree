@@ -13,6 +13,6 @@
     email={$user?.email}
     photo={$userData?.photoURL}
 />
-<div class="min-h-screen flex flex-col">
+<div class="flex flex-col">
     <slot />
 </div>
