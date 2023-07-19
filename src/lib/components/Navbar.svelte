@@ -22,8 +22,8 @@
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <div class="flex flex-row justify-between items-center pl-4 pr-4 pt-2 pb-2">
     <div class="flex flex-col">
-        <a href="/" class="text-2xl font-bold flex flex-row gap-2 items-center">
-            Lighthouse
+        <a href="/" class="flex flex-row gap-2 items-center">
+            <p class="hidden sm:block text-2xl font-bold">Lighthouse</p>
             <img src="/logo.png" class="h-12 w-12" alt="logo" />
         </a>
         {#if !home}
@@ -72,7 +72,7 @@
                         {/if}
                     </div>
                 </div>
-                <div class="flex flex-col min-w-[10ch]">
+                <div class="hidden md:flex flex-col min-w-[10ch]">
                     <p>{username}</p>
                     {#if email}
                         <p class="text-sm">{email}</p>
@@ -105,8 +105,8 @@
                 </ul>
             </div>
         {:else}
-            <a href="/login" class="btn btn-secondary">Login</a>
-            <a href="/signup" class="btn btn-secondary">Sign Up</a>
+            <a href="/login" class="hidden sm:btn btn-neutral">Login</a>
+            <a href="/signup" class="btn btn-primary">Sign Up</a>
         {/if}
     </div>
 </div>
