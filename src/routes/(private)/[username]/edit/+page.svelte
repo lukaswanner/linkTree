@@ -1,6 +1,7 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import AddLinkForm from "$lib/components/AddLinkForm.svelte";
+    import EditLinkForm from "$lib/components/EditLinkForm.svelte";
     import SortableList from "$lib/components/SortableList.svelte";
     import UserLink from "$lib/components/UserLink.svelte";
     import { db, userData, user } from "$lib/firebase";
@@ -16,7 +17,7 @@
     let showForm = false;
     let loading = false;
     let done = false;
-    let currentItem;
+    let currentItem: Link;
     let editLink: HTMLDialogElement;
 
     function sortList(e: CustomEvent) {
@@ -171,14 +172,11 @@
         </SortableList>
         <dialog bind:this={editLink} class="modal">
             <form method="dialog" class="modal-box">
-                <h3 class="font-bold text-lg">Hello!</h3>
-                <div class="modal-action">
-                    <!-- if there is a button in form, it will close the modal -->
-                    <button on:click={() => console.log("hi")} class="btn"
-                        >Save</button
-                    >
-                    <button class="btn">Close</button>
-                </div>
+                {#key currentItem}
+                    {#if currentItem}
+                        <EditLinkForm {...currentItem} />
+                    {/if}
+                {/key}
             </form>
         </dialog>
     {/if}

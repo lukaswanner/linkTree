@@ -13,8 +13,6 @@
     export let title: string;
     export let id: string;
 
-    export let close: Function;
-
     const icons = [
         "Twitter",
         "YouTube",
@@ -34,7 +32,7 @@
         const userRef = doc(db, "users", $user!.uid);
 
         await updateDoc(userRef, {
-            links: arrayUnion({ ...$formData,id: Date.now().toString() }),
+            links: arrayUnion({ ...$formData, id: Date.now().toString() }),
         });
 
         await updateDoc(userRef, {
@@ -45,70 +43,60 @@
                 id,
             }),
         });
-
-        close();
-    }
-
-    function cancelLink() {
-        close();
     }
 
     $: urlIsValid = $formData.url.match(/^(ftp|http|https):\/\/[^ "]+$/);
     $: titleIsValid = $formData.title.length < 20 && $formData.title.length > 0;
     $: formIsValid = urlIsValid && titleIsValid;
-    $: titleIsTouched = $formData.title.length > 0;
+    $: titleIsTouched = $formData.title != title;
 </script>
 
-<form
-    on:submit|preventDefault={updateLink}
-    class="bg-base-200 p-6 w-full mx-auto rounded-xl"
->
-    <div class="flex flex-col gap-4">
-        <select
-            name="icon"
-            class="select select-sm"
-            bind:value={$formData.icon}
-        >
-            {#each icons as icon}
-                <option value={icon.toLowerCase()}>{icon}</option>
-            {/each}
-        </select>
-        <input
-            name="title"
-            type="text"
-            placeholder="Title"
-            class="input input-sm"
-            bind:value={$formData.title}
-        />
-        <input
-            name="url"
-            type="text"
-            placeholder="URL"
-            class="input input-sm"
-            bind:value={$formData.url}
-        />
-    </div>
-    <div class="my-4">
-        {#if titleIsTouched && !titleIsValid}
-            <p class="text-error text-xs">Must have valid title</p>
-        {/if}
-        {#if !urlIsValid}
-            <p class="text-error text-xs">Must have a valid URL</p>
-        {/if}
-        {#if formIsValid}
-            <p class="text-success text-xs">Looks good!</p>
-        {/if}
-    </div>
+<div class="flex flex-col gap-4">
+    <label for="icon" class="label opacity-40">Link logo</label>
+    <select
+        name="icon"
+        class="select select-bordered"
+        bind:value={$formData.icon}
+    >
+        {#each icons as icon}
+            <option value={icon.toLowerCase()}>{icon}</option>
+        {/each}
+    </select>
+    <label for="title" class="label opacity-40">Link title</label>
+    <input
+        name="title"
+        type="text"
+        placeholder="Title"
+        class="input input-bordered"
+        bind:value={$formData.title}
+    />
+    {#if titleIsTouched && !titleIsValid}
+        <p class="text-error text-xs">Must have valid title</p>
+    {/if}
+    <label for="url" class="label opacity-40">Link url</label>
+    <input
+        name="url"
+        type="text"
+        placeholder="URL"
+        class="input input-bordered"
+        bind:value={$formData.url}
+    />
+    {#if !urlIsValid}
+        <p class="text-error text-xs">Must have a valid URL</p>
+    {/if}
+</div>
+<div class="my-4">
+    {#if formIsValid}
+        <p class="text-success text-xs">Looks good!</p>
+    {/if}
+</div>
 
-    <div class="flex flex-row gap-4">
-        <button
-            disabled={!formIsValid}
-            type="submit"
-            class="btn btn-success block">Save Link</button
-        >
+<div class="modal-action">
+    <button
+        disabled={!formIsValid}
+        on:click={updateLink}
+        class="btn btn-success block">Save Link</button
+    >
 
-        <button type="button" class="btn btn-error" on:click={cancelLink}
-            >Cancel</button
-        >
-    </div>
-</form>
+    <button class="btn btn-error">Close</button>
+</div>
