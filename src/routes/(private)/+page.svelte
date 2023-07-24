@@ -8,13 +8,15 @@
 </svelte:head>
 
 <main class="flex w-full flex-1">
-    <div class="hero">
-        <div class="hero-content text-center">
-            <div class="w-full">
-                <h1 class="text-7xl font-bold">Lighthouse</h1>
-                <p class="py-6 text-2xl">
-                    Shine a light on your online presence
-                </p>
+    <div class="grid lg:grid-cols-2 gap-4 p-4">
+        <div class="w-full">
+            <h1 class="text-7xl font-bold leading-[6rem]">
+                Navigating the Digital Seas
+            </h1>
+            <p class="py-6 text-2xl">
+                Discover a world of possibilities with Lighthouse.
+            </p>
+            <div>
                 {#if $userData}
                     <a href="/{$userData.username}/edit" class="btn btn-primary"
                         >Edit Profile</a
@@ -32,31 +34,12 @@
                 {/if}
             </div>
         </div>
+        <div>
+            <div
+                class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl"
+            >
+                <img src="/logo.png" alt="lighthouse" />
+            </div>
+        </div>
     </div>
 </main>
-
-<style>
-    .hero {
-        background-image: url("/background.jpg");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        position: relative;
-    }
-
-    .hero::after {
-        content: "";
-        inset: 0;
-        position: absolute;
-        background: rgba(57, 57, 57, 0.7);
-
-        /* center overlay text */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .hero-content {
-        z-index: 10;
-    }
-</style>
