@@ -1,7 +1,7 @@
 <script lang="ts">
     import { userData } from "$lib/firebase";
     import { onMount } from "svelte";
-    import { fly } from "svelte/transition";
+    import { draw, fly } from "svelte/transition";
 
     let ready = false;
     onMount(() => (ready = true));
@@ -13,7 +13,7 @@
 </svelte:head>
 
 <main class="w-full flex-1 flex flex-col gap-10 p-10">
-    <div class="w-full flex-col items-center text-center mt-10">
+    <div class="w-full flex flex-col items-center text-center mt-10">
         <h1 class=" text-7xl font-bold leading-[6rem]">
             Navigating the Digital Seas
         </h1>
@@ -34,5 +34,6 @@
                 </div>
             {/if}
         </div>
+        <img class="mt-4" src="/iPhone.png" alt="phone-showcase" />
     </div>
 </main>
