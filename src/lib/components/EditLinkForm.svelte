@@ -83,7 +83,7 @@
         bind:value={$formData.title}
     />
     {#if titleIsTouched && !titleIsValid}
-        <p class="text-error text-xs">Must have valid title</p>
+        <p class="text-error text-xs">Your title is too long!</p>
     {/if}
     <label for="url" class="label opacity-40">Link url</label>
     <input
