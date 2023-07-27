@@ -3,6 +3,7 @@
     import AddLinkForm from "$lib/components/AddLinkForm.svelte";
     import EditLinkForm from "$lib/components/EditLinkForm.svelte";
     import SortableList from "$lib/components/SortableList.svelte";
+    import Tag from "$lib/components/Tag.svelte";
     import UserLink from "$lib/components/UserLink.svelte";
     import { db, userData, user } from "$lib/firebase";
     import { doc, setDoc, updateDoc } from "firebase/firestore";
@@ -46,7 +47,7 @@
 </script>
 
 <main
-    class="flex flex-col gap-5 items-center text-center w-full max-w-xl mx-auto mt-8"
+    class="flex flex-col gap-5 items-center text-center w-full max-w-lg mx-auto mt-8"
 >
     {#if $userData?.username == $page.params.username}
         <div class="flex flex-row gap-6 w-full">
@@ -117,6 +118,11 @@
                     </button>
                 </div>
             </div>
+        </div>
+        <div class="flex flex-row w-full gap-5">
+            <Tag content="Dev"/>
+            <Tag content="Dev"/>
+            <Tag content="Dev"/>
         </div>
 
         <p class="base-content text-left self-start">
