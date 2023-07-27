@@ -45,101 +45,118 @@
     }
 </script>
 
-<main class="flex flex-col gap-5 items-center text-center mx-auto mt-8">
+<main
+    class="flex flex-col gap-5 items-center text-center w-full max-w-xl mx-auto mt-8"
+>
     {#if $userData?.username == $page.params.username}
-        <img
-            src={$userData.photoURL ?? "/user.png"}
-            alt="photoURL"
-            width="256"
-            class="mx-auto rounded-full"
-        />
+        <div class="flex flex-row gap-6 w-full">
+            <img
+                src={$userData.photoURL ?? "/user.png"}
+                alt="photoURL"
+                width="128"
+                class="rounded-xl"
+            />
 
-        <h1 class=" text-5xl text-center">
-            {$userData?.username}
-        </h1>
-
-        <div class="flex gap-4">
-            <button
-                class="btn btn-outline relative customButton rounded-lg w-[8ch]"
-                class:publishing={loading}
-                class:published={done}
-                class:btn-success={$userData?.published}
-                class:btn-error={!$userData?.published}
-                on:click={toggleProfileStatus}
-            >
-                {$userData?.published ? "Public" : "Private"}
-                <div class="hiddenIconWrapper">
-                    <span
-                        class="loading loading-spinner hiddenIcon text-base-content"
-                    />
+            <div class="flex flex-col justify-between">
+                <div>
+                    <h1 class="text-4xl text-left">
+                        {$userData?.username}
+                    </h1>
+                    {#if $userData.bio}
+                        <p class="text-l opacity-50 text-left">
+                            {$userData.bio}
+                        </p>
+                    {:else}
+                        <p class="text-l opacity-50 text-left">No bio yet</p>
+                    {/if}
                 </div>
-                <div class="hiddenCheckmarkWrapper">
-                    <svg
-                        class="hiddenIcon text-base-content"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 448 512"
-                        fill="currentColor"
+                <div class="flex gap-4 w-full">
+                    <button
+                        class="btn btn-outline relative customButton rounded-lg w-[10ch]"
+                        class:publishing={loading}
+                        class:published={done}
+                        class:btn-success={$userData?.published}
+                        class:btn-error={!$userData?.published}
+                        on:click={toggleProfileStatus}
                     >
-                        <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                        <path
-                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                        />
-                    </svg>
-                </div>
-            </button>
+                        <p>
+                            {$userData?.published ? "Public" : "Private"}
+                        </p>
+                        <div class="hiddenIconWrapper">
+                            <span
+                                class="loading loading-spinner hiddenIcon text-base-content"
+                            />
+                        </div>
+                        <div class="hiddenCheckmarkWrapper">
+                            <svg
+                                class="hiddenIcon text-base-content"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 448 512"
+                                fill="currentColor"
+                            >
+                                <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                <path
+                                    d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                                />
+                            </svg>
+                        </div>
+                    </button>
 
-            <button class="btn btn-outline rounded-lg">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="1em"
-                    fill="currentColor"
-                    viewBox="0 0 640 512"
-                    ><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                    <path
-                        d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"
-                    />
-                </svg>
-                <p class="text-">Copy link</p>
-            </button>
+                    <button class="btn btn-outline rounded-lg">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="1em"
+                            fill="currentColor"
+                            viewBox="0 0 640 512"
+                            ><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                            <path
+                                d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"
+                            />
+                        </svg>
+                        <p class="text-">Copy link</p>
+                    </button>
+                </div>
+            </div>
         </div>
-        <p class="base-content">
+
+        <p class="base-content text-left self-start">
             Manage your links, photo and publish your profile.
         </p>
 
         <div class="divider my-0" />
 
-        <div
-            class="flex flex-row gap-4 items-center justify-center text-center"
-        >
-            <a
-                class="btn btn-outline flex-1"
-                href={`/${$userData.username}/edit/bio`}>Edit Bio</a
+        <div class="flex flex-row items-start justify-between w-full">
+            <div class="flex flex-row gap-4">
+                <a
+                    class="btn btn-outline"
+                    href={`/${$userData.username}/edit/bio`}>Edit Bio</a
+                >
+                <a
+                    on:click={() => void 0}
+                    href="/{$userData.username}/edit/photo"
+                    class="btn btn-outline"
+                >
+                    Edit Picture
+                </a>
+            </div>
+            <button
+                on:click={() => addLink.showModal()}
+                class="btn btn-primary btn-outline"
             >
-            <a
-                on:click={() => void 0}
-                href="/{$userData.username}/edit/photo"
-                class="btn btn-outline flex-1"
-            >
-                Edit Picture
-            </a>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    height="1em"
+                    viewBox="0 0 448 512"
+                    ><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
+                        d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+                    />
+                </svg>
+                Link
+            </button>
         </div>
 
         <div class="divider my-0" />
-        <button
-            on:click={() => addLink.showModal()}
-            class="btn btn-outline mr-auto"
-        >
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                height="1em"
-                viewBox="0 0 448 512"
-                ><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
-                    d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
-                />
-            </svg>
-            Link
-        </button>
         <dialog bind:this={addLink} class="modal">
             <form method="dialog" class="modal-box">
                 <AddLinkForm />
@@ -181,6 +198,7 @@
 <style>
     .customButton {
         display: flex;
+        padding: 0px 4px;
         align-items: center;
         justify-content: center;
         position: relative;
@@ -214,6 +232,7 @@
         opacity: 1;
         transition: opacity 0.25s ease 0.5s;
     }
+
     .hiddenIconWrapper,
     .hiddenCheckmarkWrapper {
         position: absolute;

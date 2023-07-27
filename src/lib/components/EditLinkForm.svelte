@@ -106,7 +106,7 @@
             class="btn btn-success block">Save Link</button
         >
 
-        <button class="btn btn-error">Close</button>
+        <button class="btn">Close</button>
     </div>
     <button
         on:click={deleteLink}
