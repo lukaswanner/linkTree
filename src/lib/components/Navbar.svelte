@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { page } from "$app/stores";
     import ThemeSelect from "./ThemeSelect.svelte";
     import { auth } from "$lib/firebase";
 
