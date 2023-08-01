@@ -9,10 +9,6 @@
     export let photo: string | null | undefined;
     export let email: string | null | undefined;
 
-    $: len = $page.url.pathname.split("/").length;
-    $: links = $page.url.pathname.split("/");
-    $: home = $page.url.pathname === "/";
-
     async function signOutSSR() {
         await fetch("/api/signin", { method: "DELETE" });
         await signOut(auth);
