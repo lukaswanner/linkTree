@@ -89,9 +89,4 @@
     #user-wrapper:focus-within #arrow {
         rotate: 180deg;
     }
-    .listArrow::before {
-        opacity: 1 !important;
-        border-top: 2px solid;
-        border-right: 2px solid;
-    }
 </style>
