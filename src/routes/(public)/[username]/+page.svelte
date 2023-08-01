@@ -26,11 +26,13 @@
     <h1 class=" text-5xl">
         {data.username}
     </h1>
-    <div class="flex flex-row items-center justify-center gap-3">
-        <Tag content="Artist" />
-        <Tag content="Designer" />
-        <Tag content="Dev" />
-    </div>
+    {#if data?.tags.length}
+        <div class="flex flex-row items-center justify-center gap-3">
+            {#each data?.tags as tag}
+                <Tag {tag} />
+            {/each}
+        </div>
+    {/if}
     <div class="flex flex-row gap-5 mt-3">
         <button
             class="text-xl"
@@ -67,7 +69,7 @@
             class="list-none p-0"
         >
             {#each data.links as item}
-                <li class="flex justify-center my-2">
+                <li class="flex justify-center py-2">
                     <UserLink {...item} />
                 </li>
             {/each}

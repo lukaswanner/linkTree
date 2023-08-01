@@ -12,7 +12,7 @@
     async function preview(e: any) {
         uploading = true;
         file = e.target.files[0];
-        if(!file){
+        if (!file) {
             uploading = false;
             return;
         }
@@ -22,7 +22,7 @@
     }
     async function upload() {
         uploading = true;
-        if(!file){
+        if (!file) {
             uploading = false;
             return;
         }
@@ -37,46 +37,40 @@
 </script>
 
 <AuthCheck>
-    <main class="max-w-xl flex flex-col items-center mx-auto prose">
-        <h1>Upload a new picture</h1>
+    <section>
+        <h1 class="text-lg">Upload a new picture</h1>
+        <div class="divider" />
         {#if $userData?.username == $page.params.username}
-            <form class="max-w-screen-md w-full">
-                <div
-                    class="form-control flex flex-col items-center w-full mx-auto"
-                >
+            <form>
+                <div class="form-control items-center gap-4">
                     <img
                         src={previewURL ?? $userData?.photoURL ?? "/user.png"}
                         alt="photoURL"
                         width="256"
                         height="256"
+                        class="rounded-full"
                     />
-                    <label for="photoURL" class="label">
-                        <span class="label-text">Pick a file</span>
-                    </label>
                     <input
                         on:change={preview}
                         name="photoURL"
                         type="file"
-                        class="file-input file-input-accent w-full"
+                        class="file-input"
                         accept="image/png, image/jpeg, image/gif, image/webp"
                     />
                     {#if uploading}
                         <p class="mt-6">Uploading...</p>
                         <progress class="progress progress-info w-full mt-6" />
                     {/if}
-                </div>
-                <div class="flex flex-row gap-4 mt-8">
-                    <button on:click={upload} class="btn btn-primary">
+                    <div class="divider" />
+                    <button
+                        disabled={!preview}
+                        on:click={upload}
+                        class="btn self-start"
+                    >
                         Upload
                     </button>
-                    <a
-                        href="/{$userData.username}/edit"
-                        class="btn btn-outline"
-                    >
-                        Go Back
-                    </a>
                 </div>
             </form>
         {/if}
-    </main>
+    </section>
 </AuthCheck>

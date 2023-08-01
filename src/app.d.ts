@@ -2,25 +2,26 @@
 // for information about these interfaces
 
 declare global {
-  interface UserData {
-    username: string;
-    bio: string;
-    photoURL: string;
-    photoChanged: string;
-    published: boolean;
-    links: any[];
-  }
-  namespace App {
-    interface Error {
-      message: string;
-      data?: Record;
+    interface UserData {
+        username: string;
+        bio: string;
+        photoURL: string;
+        photoChanged: string;
+        published: boolean;
+        links: any[];
+        tags: any[];
     }
-    interface Locals {
-      uid: string | null;
+    namespace App {
+        interface Error {
+            message: string;
+            data?: Record;
+        }
+        interface Locals {
+            uid: string | null;
+        }
+        // interface PageData {}
+        // interface Platform {}
     }
-    // interface PageData {}
-    // interface Platform {}
-  }
 }
 
 export {};

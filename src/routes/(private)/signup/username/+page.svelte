@@ -39,6 +39,17 @@
                     icon: "custom",
                 },
             ],
+            tags: [
+                {
+                    title: "Tag #1",
+                },
+                {
+                    title: "Tag #2",
+                },
+                {
+                    title: "Tag #3",
+                },
+            ],
         });
 
         await batch.commit();
@@ -62,7 +73,7 @@
         <p class="text-sm">(Usernames cannot be changed)</p>
         <a class="btn btn-primary" href="/signup/photo">Upload Profile Image</a>
     {:else}
-<h2 class="text-4xl mb-4">Choose Username</h2>
+        <h2 class="text-4xl mb-4">Choose Username</h2>
         <form class="w-2/5" on:submit|preventDefault={confirmUsername}>
             <input
                 type="text"

@@ -32,5 +32,6 @@ export const load = (async ({ params }) => {
         photoURL: data.photoURL,
         bio: data.bio,
         links: data.links ?? [],
+        tags: data.tags ?? [],
     };
 }) satisfies PageLoad;

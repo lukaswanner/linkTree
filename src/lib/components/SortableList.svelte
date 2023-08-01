@@ -58,7 +58,7 @@
     <ul class="list-none p-0 flex flex-col items-center">
         {#each list as item, index (item.id)}
             <li
-                class="border-2 border-dashed border-transparent p-2 transition-all max-w-md w-full"
+                class="border-2 border-dashed border-transparent transition-all max-w-md w-full py-2"
                 class:over={item.id === isOver}
                 data-index={index}
                 data-id={item.id}
@@ -79,6 +79,6 @@
 
 <style>
     .over {
-        @apply border-gray-400 scale-105;
+        @apply scale-105 border-gray-400;
     }
 </style>
