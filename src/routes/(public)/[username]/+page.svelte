@@ -89,4 +89,7 @@
             No social media posts linked.
         </p>
     {/if}
+    <a class="fixed bottom-10 left-10" href="/">
+        <img src="/logo.png" alt="logo" class="w-12" />
+    </a>
 </main>
