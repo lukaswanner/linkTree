@@ -10,6 +10,7 @@
         "LinkedIn",
         "GitHub",
         "Custom",
+        "None",
     ];
 
     const formDefaults = {

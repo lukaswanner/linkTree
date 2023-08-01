@@ -14,7 +14,9 @@
         on:click={openModal}
         class="stack w-[24rem] max-w-[85vw] text-center hover:outline outline-[var(--pc)] bg-white text-black flex justify-center items-center p-4 rounded-full"
     >
-        <img src={`/${icon}.png`} alt={icon} class="w-6" />
+        {#if icon !== "none"}
+            <img src={`/${icon}.png`} alt={icon} class="w-6" />
+        {/if}
         <span class="text-l font-bold">{title}</span>
     </button>
 {:else}
@@ -22,7 +24,9 @@
         href={url}
         class="stack w-[24rem] max-w-[85vw] text-center hover:outline outline-[var(--pc)] bg-white text-black flex justify-center items-center p-4 rounded-full no-underline"
     >
-        <img src={`/${icon}.png`} alt={icon} class="w-6" />
+        {#if icon !== "none"}
+            <img src={`/${icon}.png`} alt={icon} class="w-6" />
+        {/if}
         <span class="text-l font-bold">{title}</span>
     </a>
 {/if}

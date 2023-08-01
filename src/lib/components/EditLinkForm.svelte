@@ -24,6 +24,7 @@
         "LinkedIn",
         "GitHub",
         "Custom",
+        "None",
     ];
 
     const formData = writable({

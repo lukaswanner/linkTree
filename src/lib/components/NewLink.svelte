@@ -2,7 +2,6 @@
     import AddLinkForm from "./AddLinkForm.svelte";
 
     let addLink: HTMLDialogElement;
-    const icon = "custom";
     const title = "Add new link";
 </script>
 
