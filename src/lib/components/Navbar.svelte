@@ -23,7 +23,6 @@
         </a>
     </div>
     <div class="flex flex-row gap-4">
-        <ThemeSelect />
         {#if username}
             <div
                 tabindex="0"
