@@ -26,36 +26,6 @@
             <p class="hidden sm:block text-2xl font-bold">Lighthouse</p>
             <img src="/logo.png" class="h-12 w-12" alt="logo" />
         </a>
-        {#if !home}
-            <div class=" text-sm breadcrumbs capitalize p-0">
-                <ul>
-                    {#each links as link, i}
-                        {#if link === ""}
-                            <li class="font-bold">
-                                <a href="/" class="link hover:link-secondary"
-                                    >Home</a
-                                >
-                            </li>
-                        {:else if i < len - 1}
-                            <li class="font-bold listArrow">
-                                <a
-                                    href="/{$page.url.pathname.slice(
-                                        1,
-                                        $page.url.pathname.indexOf(link) +
-                                            link.length
-                                    )}"
-                                    class="link hover:link-secondary">{link}</a
-                                >
-                            </li>
-                        {:else}
-                            <li class="font-bold listArrow">
-                                <p>{link}</p>
-                            </li>
-                        {/if}
-                    {/each}
-                </ul>
-            </div>
-        {/if}
     </div>
     <div class="flex flex-row gap-4">
         <ThemeSelect />
