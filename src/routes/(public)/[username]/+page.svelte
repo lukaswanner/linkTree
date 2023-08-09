@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Post from "$lib/components/Post.svelte";
     import Tag from "$lib/components/Tag.svelte";
     import UserLink from "$lib/components/UserLink.svelte";
     import type { PageData } from "./$types";
@@ -63,26 +64,35 @@
         >
     </div>
     {#if links}
-        <ul
+        <div
             in:scale={{ duration: 250, delay: 250 }}
             out:scale={{ duration: 250 }}
-            class="list-none p-0"
         >
-            {#each data.links as item}
-                <li class="flex justify-center py-2">
-                    <UserLink {...item} />
-                </li>
-            {/each}
-        </ul>
+            {#if data.links.length}
+                <ul class="list-none p-0">
+                    {#each data.links as item}
+                        <li class="flex justify-center py-2">
+                            <UserLink {...item} />
+                        </li>
+                    {/each}
+                </ul>
+            {:else}
+                <p class="text-2xl">No links so far 😱</p>
+            {/if}
+        </div>
     {:else if info}
         <div
             class="w-full max-w-md"
             in:scale={{ duration: 250, delay: 250 }}
             out:scale={{ duration: 250 }}
         >
-            <p>
-                {data.bio ?? "no bio yet..."}
-            </p>
+            {#if data.bio.length}
+                <p class="text-2xl">
+                    {data.bio}
+                </p>
+            {:else}
+                <p class="text-2xl">No bio yet! 😎</p>
+            {/if}
         </div>
     {:else if posts}
         <div
@@ -90,7 +100,15 @@
             in:scale={{ duration: 250, delay: 250 }}
             out:scale={{ duration: 250 }}
         >
-            <p>No posts so far!</p>
+            {#if data.posts.length}
+                <div class="flex flex-col items-center justify-center gap-5">
+                    {#each data.posts as post}
+                        <Post {...post} />
+                    {/each}
+                </div>
+            {:else}
+                <p class="text-2xl">No posts so far! 🥱</p>
+            {/if}
         </div>
     {/if}
     <a class="fixed bottom-10 left-10" href="/">
