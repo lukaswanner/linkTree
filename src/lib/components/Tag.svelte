@@ -26,14 +26,14 @@
         const userRef = doc(db, "users", $user!.uid);
 
         await updateDoc(userRef, {
-            tags: arrayUnion({ ...$formData, id: Date.now().toString() }),
-        });
-
-        await updateDoc(userRef, {
             tags: arrayRemove({
                 title: tag.title,
                 id: tag.id,
             }),
+        });
+
+        await updateDoc(userRef, {
+            tags: arrayUnion({ ...$formData, id: Date.now().toString() }),
         });
     }
 

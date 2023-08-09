@@ -23,11 +23,11 @@
         });
     }
 
-    $: formIsValid =
-        $formData.title.length > 0 &&
-        $formData.title.length <= 24 &&
-        $formData.content.length > 0 &&
-        $formData.title.length <= 255;
+    $: titleIsValid =
+        $formData.title.length > 0 && $formData.title.length <= 24;
+    $: contentIsValid =
+        $formData.content.length > 0 && $formData.title.length <= 255;
+    $: formIsValid = titleIsValid && contentIsValid;
 </script>
 
 <button
@@ -53,7 +53,7 @@
                     class="input input-bordered w-full"
                     bind:value={$formData.title}
                 />
-                {#if !formIsValid}
+                {#if !titleIsValid}
                     <p class="text-error text-xs mt-1">
                         Title must be between 1 & 24 characters long
                     </p>
@@ -68,6 +68,11 @@
                     class="textarea textarea-bordered textarea-lg w-full"
                     bind:value={$formData.content}
                 />
+                {#if !contentIsValid}
+                    <p class="text-error text-xs mt-1">
+                        Post must be between 1 & 255 characters long
+                    </p>
+                {/if}
             </div>
             <div class="modal-action justify-start">
                 <button
