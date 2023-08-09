@@ -50,6 +50,7 @@
                     title: "Tag #3",
                 },
             ],
+            posts: [],
         });
 
         await batch.commit();

@@ -10,6 +10,7 @@ declare global {
         published: boolean;
         links: any[];
         tags: any[];
+        posts: any[];
     }
     namespace App {
         interface Error {

@@ -3,6 +3,7 @@
     import { page } from "$app/stores";
     import EditLinkForm from "$lib/components/EditLinkForm.svelte";
     import NewLink from "$lib/components/NewLink.svelte";
+    import NewPost from "$lib/components/NewPost.svelte";
     import NewTag from "$lib/components/NewTag.svelte";
     import SortableList from "$lib/components/SortableList.svelte";
     import Tag from "$lib/components/Tag.svelte";
@@ -28,6 +29,7 @@
     let info = false;
     let photo = false;
     let tags = false;
+    let posts = false;
 
     function copyLink() {
         navigator.clipboard.writeText(`localhost/${$userData?.username}`);
@@ -132,6 +134,7 @@
                     info = false;
                     photo = false;
                     tags = false;
+                    posts = false;
                 }}
                 class:opacity-50={!links}>Links</button
             >
@@ -142,6 +145,7 @@
                     info = true;
                     photo = false;
                     tags = false;
+                    posts = false;
                 }}
                 class:opacity-50={!info}>Info</button
             >
@@ -152,6 +156,7 @@
                     info = false;
                     photo = true;
                     tags = false;
+                    posts = false;
                 }}
                 class:opacity-50={!photo}>Photo</button
             >
@@ -162,8 +167,20 @@
                     info = false;
                     photo = false;
                     tags = true;
+                    posts = false;
                 }}
                 class:opacity-50={!tags}>Tags</button
+            >
+            <button
+                class="text-xl"
+                on:click={() => {
+                    links = false;
+                    info = false;
+                    photo = false;
+                    tags = false;
+                    posts = true;
+                }}
+                class:opacity-50={!posts}>Posts</button
             >
         </div>
         {#if links}
@@ -235,7 +252,7 @@
             >
                 <NewTag />
                 {#if $userData.tags.length === 3}
-                    <p class="text-error">You can only have 3 tags!</p>
+                    <p class="text-2xl text-error">You can only have 3 tags!</p>
                 {/if}
 
                 <div class="divider" />
@@ -249,7 +266,29 @@
                         {/each}
                     </div>
                 {:else}
-                    <p>You've got no tags so far!</p>
+                    <p class="text-2xl">It's empty here ☹</p>
+                {/if}
+            </div>
+        {:else if posts}
+            <div
+                in:scale={{ duration: 250, delay: 250 }}
+                out:scale={{ duration: 250 }}
+                class="flex flex-col items-center justify-center gap-2"
+            >
+                <NewPost />
+
+                <div class="divider" />
+
+                {#if $userData?.posts && $userData?.posts.length}
+                    <div
+                        class="flex flex-row items-center justify-center gap-5"
+                    >
+                        {#each $userData?.posts as post}
+                            <p>this is a post</p>
+                        {/each}
+                    </div>
+                {:else}
+                    <p class="text-2xl">It's empty here ☹</p>
                 {/if}
             </div>
         {/if}

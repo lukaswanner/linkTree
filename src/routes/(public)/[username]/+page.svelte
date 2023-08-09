@@ -75,19 +75,23 @@
             {/each}
         </ul>
     {:else if info}
-        <p
+        <div
+            class="w-full max-w-md"
             in:scale={{ duration: 250, delay: 250 }}
             out:scale={{ duration: 250 }}
         >
-            {data.bio ?? "no bio yet..."}
-        </p>
+            <p>
+                {data.bio ?? "no bio yet..."}
+            </p>
+        </div>
     {:else if posts}
-        <p
+        <div
+            class="w-full max-w-md"
             in:scale={{ duration: 250, delay: 250 }}
             out:scale={{ duration: 250 }}
         >
-            No social media posts linked.
-        </p>
+            <p>No posts so far!</p>
+        </div>
     {/if}
     <a class="fixed bottom-10 left-10" href="/">
         <img src="/logo.png" alt="logo" class="w-12" />
