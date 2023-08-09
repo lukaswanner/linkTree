@@ -34,7 +34,6 @@
     on:click={() => {
         addPost.showModal();
     }}
-    disabled={$userData?.tags.length === 3}
     class="stack w-[24rem] max-w-[85vw] text-center bg-white text-black flex justify-center items-center p-4 rounded-full"
 >
     <span class="text-l font-bold">{title}</span>

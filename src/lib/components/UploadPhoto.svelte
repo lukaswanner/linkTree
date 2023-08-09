@@ -38,18 +38,20 @@
 
 <AuthCheck>
     <section>
-        <h1 class="text-lg">Upload a new picture</h1>
+        <h1 class="text-xl">Upload a new picture</h1>
         <div class="divider" />
         {#if $userData?.username == $page.params.username}
             <form>
                 <div class="form-control items-center gap-4">
-                    <img
-                        src={previewURL ?? $userData?.photoURL ?? "/user.png"}
-                        alt="photoURL"
-                        width="256"
-                        height="256"
-                        class="rounded-full"
-                    />
+                    {#if previewURL}
+                        <img
+                            src={previewURL}
+                            alt="photoURL"
+                            width="256"
+                            height="256"
+                            class="rounded-full"
+                        />
+                    {/if}
                     <input
                         on:change={preview}
                         name="photoURL"
@@ -63,7 +65,7 @@
                     {/if}
                     <div class="divider" />
                     <button
-                        disabled={!preview}
+                        disabled={!previewURL}
                         on:click={upload}
                         class="btn self-start"
                     >

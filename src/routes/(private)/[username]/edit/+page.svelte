@@ -165,17 +165,6 @@
                 on:click={() => {
                     links = false;
                     info = false;
-                    photo = true;
-                    tags = false;
-                    posts = false;
-                }}
-                class:opacity-50={!photo}>Photo</button
-            >
-            <button
-                class="text-xl"
-                on:click={() => {
-                    links = false;
-                    info = false;
                     photo = false;
                     tags = true;
                     posts = false;
@@ -192,6 +181,17 @@
                     posts = true;
                 }}
                 class:opacity-50={!posts}>Posts</button
+            >
+            <button
+                class="text-xl"
+                on:click={() => {
+                    links = false;
+                    info = false;
+                    photo = true;
+                    tags = false;
+                    posts = false;
+                }}
+                class:opacity-50={!photo}>Photo</button
             >
         </div>
         {#if links}
@@ -232,20 +232,21 @@
                 in:scale={{ duration: 250, delay: 250 }}
                 out:scale={{ duration: 250 }}
                 method="POST"
-                class="flex flex-col items-start gap-4 w-full"
+                class="flex flex-col items-start justify-center gap-4 w-full max-w-md"
                 use:enhance
             >
                 <div class="form-control w-full">
                     <label for="bio" class="label">
-                        <span class="text-info">Your bio</span>
+                        <span class="text-xl">Your bio</span>
                     </label>
+                    <div class="divider" />
                     <textarea
                         name="bio"
                         class="textarea textarea-bordered textarea-lg"
                         value={$userData.bio}
                     />
                 </div>
-                <button class="btn">Update Bio</button>
+                <button class="btn">Update</button>
                 <p class="text-error">{$page.form?.problem ?? ""}</p>
             </form>
         {:else if photo}
@@ -263,7 +264,7 @@
             >
                 <NewTag />
                 {#if $userData.tags.length === 3}
-                    <p class="text-2xl text-error">You can only have 3 tags!</p>
+                    <p class="text-xl text-error">You can only have 3 tags!</p>
                 {/if}
 
                 <div class="divider" />
