@@ -14,6 +14,8 @@
     import { db, userData, user } from "$lib/firebase";
     import { doc, setDoc, updateDoc } from "firebase/firestore";
     import { scale } from "svelte/transition";
+    import toast from "svelte-french-toast";
+    import { writable } from "svelte/store";
 
     type Link = {
         icon: string;
@@ -42,8 +44,15 @@
     let tags = false;
     let posts = false;
 
+    let infoForm = writable({
+        content: $userData?.bio ?? "",
+    });
+
     function copyLink() {
         navigator.clipboard.writeText(`localhost/${$userData?.username}`);
+        toast("Copied!", {
+            icon: "🤖",
+        });
     }
 
     function sortList(e: CustomEvent) {
@@ -66,9 +75,33 @@
             done = true;
             setTimeout(() => {
                 done = false;
+                if (!$userData?.published) {
+                    toast("You're undercover now!", {
+                        icon: "😎",
+                    });
+                } else {
+                    toast("Look at you!", {
+                        icon: "👀",
+                    });
+                }
             }, 1000);
         }, 1000);
     }
+
+    async function updateBio() {
+        const userRef = doc(db, "users", $user!.uid);
+
+        try {
+            await updateDoc(userRef, {
+                bio: $infoForm.content,
+            });
+            toast.success("Bio updated!");
+        } catch (e) {
+            toast.error("That didn't work!");
+        }
+    }
+
+    $: bioIsValid = $infoForm.content?.length <= 260;
 </script>
 
 <main
@@ -231,9 +264,7 @@
             <form
                 in:scale={{ duration: 250, delay: 250 }}
                 out:scale={{ duration: 250 }}
-                method="POST"
                 class="flex flex-col items-start justify-center gap-4 w-full max-w-md"
-                use:enhance
             >
                 <div class="form-control w-full">
                     <label for="bio" class="label">
@@ -243,11 +274,20 @@
                     <textarea
                         name="bio"
                         class="textarea textarea-bordered textarea-lg"
-                        value={$userData.bio}
+                        bind:value={$infoForm.content}
                     />
                 </div>
-                <button class="btn">Update</button>
-                <p class="text-error">{$page.form?.problem ?? ""}</p>
+                <button
+                    disabled={!bioIsValid}
+                    type="button"
+                    class="btn"
+                    on:click={updateBio}>Update</button
+                >
+                {#if !bioIsValid}
+                    <p class="text-error">
+                        Your bio must have less than 260 characters!
+                    </p>
+                {/if}
             </form>
         {:else if photo}
             <div

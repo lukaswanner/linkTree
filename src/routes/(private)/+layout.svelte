@@ -1,8 +1,8 @@
 <script lang="ts">
     import Navbar from "$lib/components/Navbar.svelte";
     import { user, userData } from "$lib/firebase";
+    import { Toaster } from "svelte-french-toast";
     import "../../app.css";
-
     // preload global data that we use in child components
     $user;
     $userData;
@@ -16,3 +16,5 @@
     />
     <slot />
 </div>
+
+<Toaster />
