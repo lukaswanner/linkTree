@@ -15,13 +15,17 @@
         const userRef = doc(db, "users", $user!.uid);
 
         await updateDoc(userRef, {
-            posts: arrayUnion({ ...$formData, id: Date.now().toString() }),
+            posts: arrayUnion({
+                ...$formData,
+                date: Date.now(),
+                id: Date.now().toString(),
+            }),
         });
     }
 
     $: formIsValid =
         $formData.title.length > 0 &&
-        $formData.title.length <= 8 &&
+        $formData.title.length <= 24 &&
         $formData.content.length > 0 &&
         $formData.title.length <= 255;
 </script>
@@ -51,7 +55,7 @@
                 />
                 {#if !formIsValid}
                     <p class="text-error text-xs mt-1">
-                        Title must be between 1 & 8 characters long
+                        Title must be between 1 & 24 characters long
                     </p>
                 {/if}
             </div>

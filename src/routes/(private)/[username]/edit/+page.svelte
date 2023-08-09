@@ -2,9 +2,11 @@
     import { enhance } from "$app/forms";
     import { page } from "$app/stores";
     import EditLinkForm from "$lib/components/EditLinkForm.svelte";
+    import EditPostForm from "$lib/components/EditPostForm.svelte";
     import NewLink from "$lib/components/NewLink.svelte";
     import NewPost from "$lib/components/NewPost.svelte";
     import NewTag from "$lib/components/NewTag.svelte";
+    import Post from "$lib/components/Post.svelte";
     import SortableList from "$lib/components/SortableList.svelte";
     import Tag from "$lib/components/Tag.svelte";
     import UploadPhoto from "$lib/components/UploadPhoto.svelte";
@@ -20,10 +22,19 @@
         id: string;
     };
 
+    type Post = {
+        title: string;
+        content: string;
+        date: Date;
+        id: string;
+    };
+
     let loading = false;
     let done = false;
     let currentItem: Link;
     let editLink: HTMLDialogElement;
+    let currentPost: Post;
+    let editPost: HTMLDialogElement;
 
     let links = true;
     let info = false;
@@ -281,10 +292,29 @@
 
                 {#if $userData?.posts && $userData?.posts.length}
                     <div
-                        class="flex flex-row items-center justify-center gap-5"
+                        class="flex flex-col items-center justify-center gap-5"
                     >
-                        {#each $userData?.posts as post}
-                            <p>this is a post</p>
+                        {#each $userData?.posts.reverse() as post}
+                            <div class="group relative">
+                                <Post
+                                    {...post}
+                                    editMode
+                                    openModal={() => {
+                                        currentPost = post;
+                                        console.log(currentPost);
+                                        editPost.showModal();
+                                    }}
+                                />
+                                <button
+                                    on:click={() => {
+                                        currentPost = post;
+                                        console.log(currentPost);
+                                        editPost.showModal();
+                                    }}
+                                    class="btn btn-xs btn-secondary invisible group-hover:visible absolute -right-6 -top-2"
+                                    >Edit</button
+                                >
+                            </div>
                         {/each}
                     </div>
                 {:else}
@@ -298,6 +328,15 @@
                 {#key currentItem}
                     {#if currentItem}
                         <EditLinkForm link={currentItem} />
+                    {/if}
+                {/key}
+            </form>
+        </dialog>
+        <dialog bind:this={editPost} class="modal">
+            <form method="dialog" class="modal-box">
+                {#key currentPost}
+                    {#if currentPost}
+                        <EditPostForm post={currentPost} />
                     {/if}
                 {/key}
             </form>

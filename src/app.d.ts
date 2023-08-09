@@ -1,6 +1,18 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 
+type Post = {
+    title: string;
+    content: string;
+    date: Date;
+    id: string;
+};
+type Link = {
+    icon: string;
+    title: string;
+    url: string;
+    id: string;
+};
 declare global {
     interface UserData {
         username: string;
@@ -8,9 +20,9 @@ declare global {
         photoURL: string;
         photoChanged: string;
         published: boolean;
-        links: any[];
+        links: Link[];
         tags: any[];
-        posts: any[];
+        posts: Post[];
     }
     namespace App {
         interface Error {

@@ -1,12 +1,10 @@
 <script lang="ts">
-    import EditLinkForm from "./EditLinkForm.svelte";
-
     export let icon = "custom";
     export let url = "foo";
     export let title = "some cool title";
 
     export let editMode = false;
-    export let openModal = void 0;
+    export let openModal = () => void 0;
 </script>
 
 {#if editMode}
