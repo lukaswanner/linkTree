@@ -1,11 +1,8 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { user } from "$lib/firebase";
-
-    console.log($page.data);
 </script>
 
-{#if $user}
+{#if $page.data?.uid}
     <slot />
 {:else}
     <div class="flex flex-col gap-4 items-center">

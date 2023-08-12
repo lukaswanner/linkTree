@@ -31,14 +31,6 @@ declare global {
         }
         interface Locals {
             uid: string | null;
-            username: string;
-            bio: string;
-            photoURL: string;
-            photoChanged: string;
-            published: boolean;
-            links: Link[];
-            tags: any[];
-            posts: Post[];
         }
     }
 }
