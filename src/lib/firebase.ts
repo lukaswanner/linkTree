@@ -56,7 +56,6 @@ export const user = userStore();
 
 /**
  * @param  {string} path document path or reference
- * @param  {any} startWith optional default data
  * @returns a store with realtime updates on document data
  */
 export function docStore<T>(path: string) {

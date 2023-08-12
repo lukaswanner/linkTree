@@ -342,14 +342,12 @@
                                     editMode
                                     openModal={() => {
                                         currentPost = post;
-                                        console.log(currentPost);
                                         editPost.showModal();
                                     }}
                                 />
                                 <button
                                     on:click={() => {
                                         currentPost = post;
-                                        console.log(currentPost);
                                         editPost.showModal();
                                     }}
                                     class="btn btn-xs btn-secondary invisible group-hover:visible absolute -right-6 -top-2"

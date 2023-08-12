@@ -6,6 +6,10 @@ export const handle = (async ({ event, resolve }) => {
     const sessionCookie = event.cookies.get("__session");
     const theme = event.cookies.get("theme");
 
+    if (!sessionCookie && !theme) {
+        return await resolve(event);
+    }
+
     try {
         const decodedClaims = await adminAuth.verifySessionCookie(
             sessionCookie!

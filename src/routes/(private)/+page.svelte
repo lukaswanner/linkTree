@@ -1,10 +1,5 @@
 <script lang="ts">
     import { userData } from "$lib/firebase";
-    import { onMount } from "svelte";
-    import { draw, fly } from "svelte/transition";
-
-    let ready = false;
-    onMount(() => (ready = true));
 </script>
 
 <svelte:head>
