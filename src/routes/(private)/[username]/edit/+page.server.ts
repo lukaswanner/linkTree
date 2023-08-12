@@ -6,7 +6,7 @@ export const load = (async ({ locals, params }) => {
     const uid = locals?.uid;
 
     if (!uid) {
-        throw redirect(301, "/signup");
+        throw redirect(301, "/login");
     }
 
     const userDoc = await adminDB.collection("users").doc(uid!).get();

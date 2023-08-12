@@ -9,7 +9,7 @@
     export let email: string | null | undefined;
 
     async function signOutSSR() {
-        await fetch("/api/signin", { method: "DELETE" });
+        await fetch("/api/signout", { method: "DELETE" });
         await signOut(auth);
     }
 </script>
