@@ -19,6 +19,7 @@ export const handle = (async ({ event, resolve }) => {
         event.locals.uid = uid;
     } catch (e) {
         event.locals.uid = null;
+        event.cookies.delete("__session");
     } finally {
         if (!theme || !themes.includes(theme)) {
             return await resolve(event);
