@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { auth, user, userData } from "$lib/firebase";
+    import { auth } from "$lib/firebase";
 
     import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
@@ -19,23 +19,9 @@
     }
 </script>
 
-<div class="prone">
+<div class="flex flex-col gap-4">
     <h2 class="text-4xl">Login</h2>
-</div>
 
-{#if $user}
-    <h2 class="card-title">Welcome, {$user.displayName}</h2>
-    <p class="text-center text-success">You are logged in</p>
-    {#if !$userData}
-        <a href="/signup" class="btn btn-warning mt-4"
-            >Account is not yet registered</a
-        >
-    {:else}
-        <a href="/{$userData.username}" class="btn btn-success mt-4"
-            >Your Profile</a
-        >
-    {/if}
-{:else}
     <button
         class="btn btn-contained w-56 flex flex-row"
         on:click={signInWithGoogle}
@@ -61,4 +47,4 @@
         >
         <p>Login with Google</p>
     </button>
-{/if}
+</div>

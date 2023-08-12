@@ -1,5 +1,5 @@
 <script lang="ts">
-    import ThemeSelect from "./ThemeSelect.svelte";
+    import { page } from "$app/stores";
     import { auth } from "$lib/firebase";
 
     import { signOut } from "firebase/auth";
@@ -23,7 +23,7 @@
         </a>
     </div>
     <div class="flex flex-row gap-4">
-        {#if username}
+        {#if $page.data.uid && username}
             <div
                 tabindex="0"
                 id="user-wrapper"
