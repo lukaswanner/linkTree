@@ -25,9 +25,8 @@
 </script>
 
 <div class="flex flex-col gap-4">
-    <h2 class="text-4xl">Login</h2>
-
     {#if !signedIn}
+        <h2 class="text-4xl">Login</h2>
         <button
             class="btn btn-contained w-56 flex flex-row"
             on:click={signInWithGoogle}
@@ -54,6 +53,7 @@
             <p>Login with Google</p>
         </button>
     {:else if $userData}
+        <h2 class="text-4xl">You're signed in!</h2>
         <a href="/{$userData.username}" class="btn btn-success mt-4"
             >Your Profile</a
         >
