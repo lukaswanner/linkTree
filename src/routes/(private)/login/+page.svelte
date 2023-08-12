@@ -54,7 +54,7 @@
         </button>
     {:else if $userData}
         <h2 class="text-4xl">You're signed in!</h2>
-        <a href="/{$userData.username}" class="btn btn-success mt-4"
+        <a href="/{$userData.username}/edit" class="btn btn-success mt-4"
             >Your Profile</a
         >
     {/if}

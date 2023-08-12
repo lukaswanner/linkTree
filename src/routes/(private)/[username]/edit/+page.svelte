@@ -49,7 +49,9 @@
     });
 
     function copyLink() {
-        navigator.clipboard.writeText(`localhost/${$userData?.username}`);
+        navigator.clipboard.writeText(
+            `${$page.url.origin}/${$userData?.username}`
+        );
         toast("Copied!", {
             icon: "🤖",
         });
