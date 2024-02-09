@@ -4,7 +4,7 @@ Welcome to **Svelte LinkTree**, a cutting-edge personal project that redefines t
 
 ## Features
 
-**Svelte LinkHub** distinguishes itself with a range of impressive features:
+**Svelte LinkTree** distinguishes itself with a range of impressive features:
 
 - **Elegant, Custom Styling**: Break free from the constraints of traditional design with fully customizable themes that reflect your unique style.
 - **Lightning-Fast Performance**: Built with Svelte for unparalleled speed, ensuring your visitors enjoy a seamless browsing experience.
